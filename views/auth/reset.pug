@@ -1,0 +1,30 @@
+extends ../layouts/layout.pug
+block content
+    .container
+      .row.justify-content-center
+        .col-md-8
+          .card
+            .card-header Reset Password
+            .card-body
+              form(method='POST' action='/resetPassword')
+                if !auth
+                  input#token-input(type='hidden' name='token' value=`${token}`)
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='password') New Password
+                  .col-md-6
+                    input#newPassword-input.form-control(type='password' name='newPassword' required='' autocomplete='new-password')
+                    span.invalid-feedback(role='alert')
+                      strong
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='password-confirm') Confirm Password
+                  .col-md-6
+                    input#confirmPassword-input.form-control(type='password' name='confirmPassword' required='' autocomplete='new-password')
+                .form-group.row.mb-0
+                  .col-md-6.offset-md-4
+                    #form-submit.btn.btn-primary
+                      | Reset Password
+                .form-group.row.mb-0
+                  col-md-8.m-auto
+                    label#attampts-input.form-check-label(for='remember')
+                      span.invalid-feedback(role='alert')
+                        strong

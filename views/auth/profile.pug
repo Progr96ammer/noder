@@ -1,0 +1,48 @@
+extends ../layouts/layout.pug
+block content
+    .container
+      .row.justify-content-center
+        .col-md-10
+          .card
+            .card-header Profile
+            .card-body
+              form(method='POST' action='' enctype='multipart/form-data')
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='firstName') First Name
+                  .col-md-6
+                    input#firstName-input.form-control(type='text' name='firstName' value=`${user.firstName}` required='' autocomplete='firstName' autofocus='')
+                    span.invalid-feedback(role='alert')
+                      strong
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='lastName') Last Name
+                  .col-md-6
+                    input#lastName-input.form-control(type='text' name='lastName' value=`${user.lastName}` required='' autocomplete='lastName' autofocus='')
+                    span.invalid-feedback(role='alert')
+                      strong
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='username') Username
+                  .col-md-6
+                    input#username-input.form-control(type='text' name='username' value=`${user.username}` required='' autocomplete='username')
+                    span.invalid-feedback(role='alert')
+                      strong
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='password') Current Password
+                  .col-md-6
+                    input#password-input.form-control(type='password' name='password' required='' autocomplete='new-password')
+                    span.invalid-feedback(role='alert')
+                      strong
+                .form-group.row
+                  .col-md-6.offset-md-4
+                    #form-submit.btn.btn-primary
+                      | Update
+                .form-group.row
+                  .col-md-6.offset-md-4
+                    a(href='/updatePassword') Update Passowrd ?
+                .form-group.row
+                  .col-md-6.offset-md-4
+                    a(href='/deleteUser') Delete Account ?
+                .form-group.row.mb-0
+                  col-md-8.m-auto
+                    label#attampts-input.form-check-label(for='remember')
+                      span.invalid-feedback(role='alert')
+                        strong

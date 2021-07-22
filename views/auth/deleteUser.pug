@@ -1,0 +1,24 @@
+extends ../layouts/layout.pug
+block content
+    .container
+      .row.justify-content-center
+        .col-md-8
+          .card
+            .card-header Delete User
+            .card-body
+              form(method='POST' action='deleteUser')
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='password') Password
+                  .col-md-6
+                    input#password-input.form-control(type='password' name='password' required='' autocomplete='password')
+                    span.invalid-feedback(role='alert')
+                      strong
+                .form-group.row.mb-0
+                  .col-md-6.offset-md-4
+                    #form-submit.btn.btn-primary
+                      | Delete
+                .form-group.row.mb-0
+                  col-md-8.m-auto
+                    label#attampts-input.form-check-label(for='remember')
+                      span.invalid-feedback(role='alert')
+                        strong

@@ -1,0 +1,19 @@
+extends ../layouts/layout.pug
+block content
+    .container
+      .row.justify-content-center
+        .col-md-8
+          .card
+            .card-header Verify Your Email Address
+            .card-body
+              if sent
+                .alert.alert-success(role='alert')
+                  | A fresh verification link has been sent to your email address.
+              |Before proceeding, please check your email for a verification link.
+              br
+              |If you did not receive the email 
+              form.d-inline(method='POST' action='/sendEmailVerify')
+                #form-submit.btn.btn-link.p-0.m-0.align-baseline click here to request another
+              label#attampts-input.form-check-label(for='remember')
+                span.invalid-feedback(role='alert')
+                  strong
