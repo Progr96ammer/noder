@@ -1,75 +1,20 @@
-doctype html
-head
-  meta(charset='utf-8')
-  meta(name='viewport', content='width=device-width, initial-scale=1')
-  // CSRF Token
-  meta(name='csrf-token', content='')
-  // Fonts
-  script(src='https://code.jquery.com/jquery-3.6.0.min.js', integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=', crossorigin='anonymous')
-  link(rel='dns-prefetch', href='//fonts.gstatic.com')
-  link(href='https://fonts.googleapis.com/css?family=Nunito', rel='stylesheet')
-  link(rel='stylesheet', type='text/css', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
-  script(src='https://kit.fontawesome.com/47d3f22c9f.js', crossorigin='anonymous')
-  // Styles
-  link(href='/stylesheets/style.css', rel='stylesheet')
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-#app
-  nav.navbar.navbar-expand-md.navbar-light.bg-white.shadow-sm
+extends layouts/layout.pug
+block content
     .container
-      a.navbar-brand(href='/')
-        img(src='images/logo.svg' style='height:20px;' class='mb-1')
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label="{{ __('Toggle navigation') }}")
-        span.navbar-toggler-icon
-      #navbarSupportedContent.collapse.navbar-collapse
-        // Left Side Of Navbar
-        ul.navbar-nav.mr-auto
-          li.nav-item.active
-            a.nav-link(href='/home')
-              | Home 
-        ul.navbar-nav.ml-auto
-          if !auth
-            li.nav-item
-              a.nav-link(href='/login') Login
-            li.nav-item
-              a.nav-link(href='/register') Register
-          if auth
-            li.nav-item.dropdown
-              a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', v-pre='')
-              .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdown')
-                a#profile.dropdown-item(href='/profile') Profile
-                hr.m-1
-                a#logout.dropdown-item() Logout
-  main.py-4
-  .container
-    .row.justify-content-center
-      .col-md-8
-        img(src='images/background.svg')
-      .col-md-8.p-5
-        ul(style='list-style:disc')
-          li
-            span.d-inline.font-weight-bolder(style='color:#8cc84b;font-size:large;')
-              | Noder.js&nbsp;
-            p.lead.d-inline
-            | is an open source node.js starter kit, This project was created using node.js language,express.js framework and mongoDb for the database structure in addition to bootstrap framework for the frontend.
-          li
-            p.lead.d-inline
-            |The idea of this project is to be the beginning of its development into an integrated framework inspired by the Laravel framework.
-            br
-          a.btn.btn-outline.btn-lg.border.mt-4(href='https://github.com/Progr96ammer/noder',style='background:#444;color:white')
+      .row.justify-content-center
+        .col-md-8
+          img(src='images/background.svg')
+        .col-md-8.p-5
+          ul(style='list-style:disc')
+            li
+              span.d-inline.font-weight-bolder(style='color:#8cc84b;font-size:large;')
+                | Noder.js&nbsp;
+              p.lead.d-inline
+              | is an open source node.js starter kit, This project was created using node.js language,express.js framework and mongoDb for the database structure in addition to bootstrap framework for the frontend.
+            li
+              p.lead.d-inline
+              |The idea of this project is to be the beginning of its development into an integrated framework inspired by the Laravel framework.
+              br
+            a.btn.btn-outline.btn-lg.border.mt-4(href='https://github.com/Progr96ammer/noder',style='background:#444;color:white')
               span.fa.fa-github
               |  View on GitHub
-//- footer#contact-me.page-footer.font-small.bg-dark.pt-4(style='min-height: 14%;')
-//-   .row.justify-content-center.text-white.m-0
-//-     .col-12.text-center
-//-       a.text-decoration-none(target='_blank', href="https://www.google.com/maps/place/30%C2%B004'02.8%22N+31%C2%B020'15.4%22E/@30.0674324,31.3354311,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x0!8m2!3d30.0674324!4d31.3376198?hl=en")
-//-         i.fas.fa-map-marker-alt(aria-hidden='true')
-//-         |  Address 9 Blocks Of Awel Maio Alnasr Road ..Nasr City
-//-     .col-md-4.col-12.p-0.text-center
-//-       p
-//-         i.far.fa-envelope
-//-         |  americanlipo@gmail.com
-script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js', integrity='sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV', crossorigin='anonymous')
-script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js', integrity='sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf', crossorigin='anonymous')
-script(src='https://code.jquery.com/jquery-3.6.0.min.js', integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=', crossorigin='anonymous')
-script(src='/javascripts/script.js')
-script(src='/javascripts/bundle.js')

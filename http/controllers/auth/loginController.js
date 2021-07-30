@@ -4,7 +4,7 @@ var Auth = require('../../middleware/authentication');
 var User = require('../../../models/userModel');
 
 exports.loginForm = function(req, res, next) {
-  if (!Auth.checkAuth(req)) {
+  if (!Auth.checkAuth(req,res)) {
     res.render('auth/login');
   }
   return res.redirect('home');
@@ -63,7 +63,7 @@ check('password')
         if (err) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        req.body.remember ? Auth.attempt(user._id,res,864000000):Auth.attempt(user._id,res);
+        Auth.attempt(user,res);
         res.redirect('home');
       });
     }

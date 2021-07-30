@@ -22,7 +22,7 @@ const sendEmailVerify = exports.sendEmailVerify = (req,id)=> {
     if (!user) {
       res.render('./errors/error',{error:500,msg:"Server Error"});
     }
-    var token = jwt.sign({ id:user._id,date:Date()}, process.env.SECRET_KEY);
+    var token = jwt.sign({ id:user._id,date:Date()}, process.env.SECRET_KEY, { expiresIn: 60*60 });
     // async..await is not allowed in global scope, must use a wrapper
     async function main() {
       // Generate test SMTP service account from ethereal.email
@@ -56,9 +56,6 @@ const sendEmailVerify = exports.sendEmailVerify = (req,id)=> {
 exports.verifyEmail = function(req, res) {
   var decoded = jwt.verify(req.query.token, process.env.SECRET_KEY);
     if (decoded) {
-      const tokenDate = new Date(decoded.date);
-      const addHours = new Date(tokenDate.setHours(tokenDate.getHours()+1));
-    if (addHours.getTime() > new Date().getTime()) {
       User.updateOne({_id:decoded.id},{verifiedAt:Date()}, function(err){
         if (err) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
@@ -69,8 +66,4 @@ exports.verifyEmail = function(req, res) {
     else{
       res.render('./errors/error',{error:408,msg:"Request Time Out"});
     }
-  }
-  else{
-    res.render('./errors/error',{error:401,msg:"Unauthorized"});
-  }
 };

@@ -4,15 +4,10 @@ var Auth = require('../../middleware/authentication');
 var User = require('../../../models/userModel');
 
 exports.profileForm = function(req, res, next) {
-	User.findOne({_id:Auth.Auth(req).decoded.id}, function(err, user){
-		if (!user) {
-		  res.render('./errors/error',{error:500,msg:"Server Error"});
-		}
-		res.render('auth/profile',{
-		  auth:Auth.Auth(req).Auth,
-		  user:user,
-		});
-	});
+    res.render('auth/profile',{
+        auth:true,
+        user:Auth.Auth(req,res).user,
+    });
 };
 
 exports.profile = [
@@ -30,7 +25,7 @@ check('username')
 .bail()
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
-      User.findById(Auth.Auth(req).decoded.id, function(err, user){
+      User.findById(Auth.Auth(req).user._id, function(err, user){
         if(err) {
           reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
         }
@@ -59,7 +54,7 @@ check('password')
 .bail()
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
-        User.findById(Auth.Auth(req).decoded.id, function(err, user){
+        User.findById(Auth.Auth(req).user._id, function(err, user){
           if(err) {
             reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
           }
@@ -80,13 +75,13 @@ check('password')
        res.send({errors: errors.array()});
     }
     else{
-      User.updateOne({_id:Auth.Auth(req).decoded.id},{firstName:req.body.firstName,lastName:req.body.lastName,username:req.body.username}, function(err, user){
+      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{firstName:req.body.firstName,lastName:req.body.lastName,username:req.body.username}, {new: true}, function(err, user){
       	if (err) {
             res.render('./errors/error',{error:500,msg:"Server Error"});
       	}
-      	else{
-      		res.redirect('/profile');
-      	}
+      	console.log(user)
+          Auth.attempt(user,res,false,Auth.Auth(req).session);
+          res.redirect('/profile');
       });
     }
   },

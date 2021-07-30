@@ -5,7 +5,7 @@ var crypto = require('crypto');
 var emailVerifyController = require('./emailVerifyController');
 
 exports.registerForm = function(req, res, next) {
-  if (!Auth.checkAuth(req)) {
+  if (!Auth.checkAuth(req,res)) {
     res.render('./auth/register');
   }
   return res.redirect('home');
@@ -83,7 +83,7 @@ return true;
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
         emailVerifyController.sendEmailVerify(req,newUser._id);
-        Auth.attempt(newUser._id,res);
+        Auth.attempt(newUser,res);
         res.redirect('home');
       });
     }

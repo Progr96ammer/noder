@@ -7,10 +7,10 @@ var Auth = require('../../middleware/authentication');
 var crypto = require('crypto');
 
 exports.sendResetPasswordForm = function(req, res) {
-  if (Auth.checkAuth(req)) {
-    res.redirect('home');
+  if (Auth.checkAuth(req)){
+    res.redirect('home')
   }
-    res.render('./auth/resetPassword');
+  res.render('auth/resetPassword')
 };
 
 exports.sendResetPassword = [
@@ -38,7 +38,7 @@ check('credential')
         if (!user) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        var token = jwt.sign({ id:user._id,date:Date()}, process.env.SECRET_KEY);
+        var token = jwt.sign({ id:user._id,date:Date()}, process.env.SECRET_KEY, { expiresIn: 60*60 });
         // async..await is not allowed in global scope, must use a wrapper
         async function main() {
           // Generate test SMTP service account from ethereal.email
@@ -75,30 +75,12 @@ check('credential')
 exports.resetPasswordForm = function(req, res) {
   if (req.query.token) {
     var decoded = jwt.verify(req.query.token, process.env.SECRET_KEY);
-    if (decoded) {
-      const tokenDate = new Date(decoded.date);
-      const addHours = new Date(tokenDate.setHours(tokenDate.getHours()+1));
-      if (addHours.getTime() > new Date().getTime()) {
+      if (decoded) {
         res.render('./auth/reset',{token:req.query.token});
       }
       else{
         res.render('./errors/error',{error:408,msg:"Request Time Out"});
       }
-    }
-    else{
-      res.render('./errors/error',{error:401,msg:"Unauthorized"});
-    }
-  }
-  else{
-    User.findOne({_id:Auth.Auth(req).decoded.id}, function(err, user){
-      if (!user) {
-        res.render('./errors/error',{error:500,msg:"Server Error"});
-      }
-      res.render('./auth/reset',{
-        auth:Auth.Auth(req).Auth,
-        user:user,
-      });
-    });
   }
 };
 
@@ -120,17 +102,17 @@ return true;
        res.send({errors: errors.array()});
     }
     else{
-      if (!req.body.token && !req.cookies.token) {
+      if (!req.body.token) {
         res.render('./errors/error',{error:401,msg:"Unauthorized"});
       }
       else{
-        var decoded = jwt.verify(req.body.token||req.cookies.token, process.env.SECRET_KEY);
+        var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
         if (decoded) {
-          User.updateOne({_id:decoded.id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")}, function(err){
+          User.findOneAndUpdate({_id:decoded.id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")},{new:true}, function(err,user){
             if (err) {
               res.render('./errors/error',{error:500,msg:"Server Error"});
             }
-            Auth.attempt(decoded.id,res);
+            Auth.attempt(user,res);
             res.redirect('home');
           });
         }
@@ -142,11 +124,10 @@ return true;
 }]
 
 exports.updatePasswordForm = function(req, res) {
-  console.log(Auth.checkAuth(req))
-  if (Auth.checkAuth(req)) {
-    res.render('./auth/updatePassword');
-  }
-  res.redirect('home');
+  res.render('auth/updatePassword',{
+    auth:true,
+    user:Auth.Auth(req,res).user,
+  });
 };
 
 exports.updatePassword = [
@@ -155,7 +136,7 @@ exports.updatePassword = [
       .bail()
       .custom((value, {req}) => {
         return new Promise((resolve, reject) => {
-          User.findById(Auth.Auth(req).decoded.id, function(err, user){
+          User.findById(Auth.Auth(req).user._id, function(err, user){
             if(err) {
               reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
             }
@@ -184,24 +165,10 @@ exports.updatePassword = [
     if (!errors.isEmpty()){
       res.send({errors: errors.array()});
     }
-    else{
-      if (!req.body.token && !req.cookies.token) {
-        res.render('./errors/error',{error:401,msg:"Unauthorized"});
-      }
-      else{
-        var decoded = jwt.verify(req.body.token||req.cookies.token, process.env.SECRET_KEY);
-        if (decoded) {
-          User.updateOne({_id:decoded.id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")}, function(err){
-            if (err) {
-              res.render('./errors/error',{error:500,msg:"Server Error"});
-            }
-            Auth.attempt(decoded.id,res);
-            res.redirect('home');
-          });
+      User.updateOne({_id:Auth.Auth(req).user._id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")}, function(err){
+        if (err) {
+          res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        else{
-          res.render('./errors/error',{error:401,msg:"Unauthorized"});
-        }
-      }
-    }
+      });
+    res.redirect('profile');
   }]

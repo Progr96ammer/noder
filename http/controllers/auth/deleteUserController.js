@@ -1,21 +1,15 @@
 var Auth = require('../../middleware/authentication');
 var User = require('../../../models/userModel');
 var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
+var logout = require('../../controllers/auth/logoutController');
 const { check, validationResult } = require('express-validator');
 
 exports.deleteUserForm = function(req, res, next) {
-  if (!Auth.checkAuth(req)) {
-    res.render('auth/login');
-  }
-  User.findOne({_id:Auth.Auth(req).decoded.id}, function(err, user){
-  	if (!user) {
-      res.render('./errors/error',{error:500,msg:"Server Error"});
-    }
     res.render('auth/deleteUser',{
-      auth:Auth.Auth(req).Auth,
-      user:user,
+        auth:true,
+        user:Auth.Auth(req,res).user,
     });
-  });
 };
 
 
@@ -25,7 +19,7 @@ check('password')
 .bail()
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
-        User.findById(Auth.Auth(req).decoded.id, function(err, user){
+        User.findById(Auth.Auth(req).user._id, function(err, user){
           if(err) {
             reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
           }
@@ -45,12 +39,11 @@ check('password')
        res.send({errors: errors.array()});
     }
     else{
-      User.deleteOne({ _id:Auth.Auth(req).decoded.id}, function(err, user){
+      User.deleteOne({ _id:Auth.Auth(req).user._id}, function(err, user){
           if(err) {
             res.render('./errors/error',{error:500,msg:"Server Error"});
           }
-          	res.clearCookie('token');
-    		res.render('./index');
+          	logout.logout(req,res);
         });
     }
   },

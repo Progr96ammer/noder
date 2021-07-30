@@ -8,29 +8,11 @@ var homeController = require('../http/controllers/homeController');
 var logoutController = require('../http/controllers/auth/logoutController');
 var profileController = require('../http/controllers/auth/profileController');
 var deleteUserController = require('../http/controllers/auth/deleteUserController');
-
+var jwt = require('jsonwebtoken');
 var Auth = require('../http/middleware/authentication');
 var User = require('../models/userModel');
 
-
-router.get('/', function(req, res, next) {
-
-  if (Auth.checkAuth(req)){
-    User.findOne({_id:Auth.Auth(req).decoded.id}, function(err, user){
-      if (!user) {
-        res.render('./errors/error',{error:500,msg:"Server Error"});
-      }
-      res.render('index',{
-        auth:Auth.Auth(req).Auth,
-        user:user,
-      });
-    });
-  }
-  else{
-    res.render('index');
-  }
-});
-
+router.get('/', homeController.index);
 router.get('/register', registerController.registerForm);
 router.post('/register', Auth.rateLimiter, registerController.register);
 
