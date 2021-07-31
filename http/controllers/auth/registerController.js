@@ -82,9 +82,10 @@ return true;
         if (err) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        emailVerifyController.sendEmailVerify(req,newUser._id);
-        Auth.attempt(newUser,res);
-        res.redirect('home');
+        emailVerifyController.sendEmailVerify(req,res,newUser._id,function (){
+          Auth.attempt(newUser,res);
+          res.redirect('home');
+        });
       });
     }
   },

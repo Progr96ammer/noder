@@ -5,19 +5,15 @@ var User = require('../../../models/userModel');
 var Auth = require('../../middleware/authentication');
 
 const sendEmailVerifyAgain = exports.sendEmailVerifyAgain = (req, res)=> {
-  var decoded = jwt.verify(req.cookies.token, process.env.SECRET_KEY);
-  if (!decoded) {
-    res.render('./errors/error',{error:401,msg:"Unauthorized"});
-  }
-
-  sendEmailVerify(req,decoded.id);
-  res.render('./auth/verify',{
-    auth:Auth.Auth(req).Auth,
-    sent:true,
+  sendEmailVerify(req,res,Auth.Auth(req,res).user._id,function (){
+    res.render('./auth/verify',{
+      auth:Auth.Auth(req,res).Auth,
+      sent:true,
+    });
   });
 }
 
-const sendEmailVerify = exports.sendEmailVerify = (req,id)=> {
+const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
   User.findById(id, function(err, user){
     if (!user) {
       res.render('./errors/error',{error:500,msg:"Server Error"});
@@ -50,6 +46,7 @@ const sendEmailVerify = exports.sendEmailVerify = (req,id)=> {
     }
     main().catch(console.error);
   });
+  cb();
 }
 
 
