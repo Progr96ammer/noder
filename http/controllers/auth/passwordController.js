@@ -8,7 +8,7 @@ var crypto = require('crypto');
 
 exports.sendResetPasswordForm = function(req, res) {
   if (Auth.checkAuth(req)){
-    res.redirect('home')
+    res.redirect('/home')
   }
   res.render('auth/resetPassword')
 };
@@ -113,7 +113,7 @@ return true;
               res.render('./errors/error',{error:500,msg:"Server Error"});
             }
             Auth.attempt(user,res);
-            res.redirect('home');
+            res.redirect('/home');
           });
         }
         else{
@@ -170,5 +170,5 @@ exports.updatePassword = [
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
       });
-    res.redirect('profile');
+    res.redirect('/profile');
   }]

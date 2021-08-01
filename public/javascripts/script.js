@@ -28,7 +28,7 @@ $("#form-submit").click (function() {
 $("#logout").click (function() {
   $.ajax({
       type:"post",
-      url:"/logout",
+      url:"/user/logout",
       success:function(response){
       	window.location.replace("/");
       },

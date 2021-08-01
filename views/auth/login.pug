@@ -6,7 +6,7 @@ block content
         .card
           .card-header Login
           .card-body
-            form(method='POST' action="/login")
+            form(method='POST' action="/user/login")
               .form-group.row
                 label.col-md-4.col-form-label.text-md-right(for='credential') E-Mail/Username
                 .col-md-6
@@ -23,7 +23,7 @@ block content
                 .col-md-8.offset-md-4
                   #form-submit.btn.btn-primary
                     | Login
-                  a.btn.btn-link(href='sendResetPassword')
+                  a.btn.btn-link(href='/user/sendResetPassword')
                     | Forget Password ?
               .form-group.row.mb-0
                 col-md-8.m-auto

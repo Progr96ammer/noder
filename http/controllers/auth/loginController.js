@@ -7,7 +7,7 @@ exports.loginForm = function(req, res, next) {
   if (!Auth.checkAuth(req,res)) {
     res.render('auth/login');
   }
-  return res.redirect('home');
+  return res.redirect('/home');
 };
 
 
@@ -64,7 +64,7 @@ check('password')
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
         Auth.attempt(user,res);
-        res.redirect('home');
+        res.redirect('/home');
       });
     }
   },

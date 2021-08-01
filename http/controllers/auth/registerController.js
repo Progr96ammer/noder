@@ -8,7 +8,7 @@ exports.registerForm = function(req, res, next) {
   if (!Auth.checkAuth(req,res)) {
     res.render('./auth/register');
   }
-  return res.redirect('home');
+  return res.redirect('/home');
 };
 
 exports.register = [
@@ -84,7 +84,7 @@ return true;
         }
         emailVerifyController.sendEmailVerify(req,res,newUser._id,function (){
           Auth.attempt(newUser,res);
-          res.redirect('home');
+          res.redirect('/home');
         });
       });
     }

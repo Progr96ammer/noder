@@ -6,7 +6,7 @@ block content
           .card
             .card-header Reset Password
             .card-body
-              form(method='POST' action='/resetPassword')
+              form(method='POST' action='/user/resetPassword')
                 if !auth
                   input#token-input(type='hidden' name='token' value=`${token}`)
                 .form-group.row

@@ -81,7 +81,7 @@ check('password')
       	}
       	console.log(user)
           Auth.attempt(user,res,false,Auth.Auth(req).session);
-          res.redirect('/profile');
+          res.redirect('/user/profile');
       });
     }
   },
