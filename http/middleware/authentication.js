@@ -82,7 +82,7 @@ exports.checkEmailVerify = [(req, res, next)=> {
 
 const rateLimiter = exports.rateLimiter = (req, res, next) =>{
 	if (!newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress )) {
-		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:0}, 3600);
+		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:0}, 60);
 	}
 	if (newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attempts < 7) {
 		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attempts +1}, 60);
