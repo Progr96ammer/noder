@@ -14,8 +14,8 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 			}
 		});
 	}
-	var token = jwt.sign({ user:user,session:hashRand }, process.env.SECRET_KEY, {expiresIn:60});
-	var reftoken = jwt.sign({ user:user,session:hashRand }, process.env.SECRET_KEY, {expiresIn:120});
+	var token = jwt.sign({ user:user,session:hashRand }, process.env.SECRET_KEY, {expiresIn:1800000});
+	var reftoken = jwt.sign({ user:user,session:hashRand }, process.env.SECRET_KEY, {expiresIn:2592000});
     res.cookie('token',token,{ maxAge: 2592000000, httpOnly: true });
 	res.cookie('reftoken',reftoken,{ maxAge: 2592000000, httpOnly: true });
 };
