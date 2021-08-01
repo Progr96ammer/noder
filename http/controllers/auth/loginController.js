@@ -63,8 +63,7 @@ check('password')
         if (err) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        Auth.attempt(user,res);
-        res.redirect('/home');
+        res.send({url:'/home',token:Auth.attempt(user,res)})
       });
     }
   },

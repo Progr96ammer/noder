@@ -14,7 +14,7 @@ $("#form-submit").click (function() {
         }
         else {
           document.body.innerHTML = "";
-          document.write(response);
+            window.location.replace(response.url);
         }
       },
       error:function(errors){

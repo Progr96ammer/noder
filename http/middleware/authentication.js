@@ -18,6 +18,7 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 	var reftoken = jwt.sign({ user:user,session:hashRand }, process.env.SECRET_KEY, {expiresIn:2592000});
     res.cookie('token',token,{ maxAge: 2592000000, httpOnly: true });
 	res.cookie('reftoken',reftoken,{ maxAge: 2592000000, httpOnly: true });
+	return {token:token,reftoken:reftoken}
 };
 
 exports.routeAuth = [(req, res, next)=> {
@@ -81,13 +82,13 @@ exports.checkEmailVerify = [(req, res, next)=> {
 
 const rateLimiter = exports.rateLimiter = (req, res, next) =>{
 	if (!newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress )) {
-		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attampts:0}, 3600);
+		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:0}, 3600);
 	}
-	if (newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attampts < 7) {
-		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attampts:newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attampts +1}, 3600);
+	if (newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attempts < 7) {
+		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attempts +1}, 3600);
 		next();
 	}
 	else{
-		res.send ({"errors": [{"value": "","msg": "You have reached the maximum number of attampting for one hour. please try again after one Hour.","param": "attampts","location": "body"}]});
+		res.send ({"errors": [{"value": "","msg": "You have reached the maximum number of attampting for one hour. please try again after one Hour.","param": "attempts","location": "body"}]});
 	}
 }
