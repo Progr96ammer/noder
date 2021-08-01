@@ -85,7 +85,7 @@ const rateLimiter = exports.rateLimiter = (req, res, next) =>{
 		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:0}, 3600);
 	}
 	if (newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attempts < 7) {
-		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attempts +1}, 3600);
+		newCache.set(req.headers['x-forwarded-for'] || req.connection.remoteAddress, {attempts:newCache.get( req.headers['x-forwarded-for'] || req.connection.remoteAddress ).attempts +1}, 60);
 		next();
 	}
 	else{
