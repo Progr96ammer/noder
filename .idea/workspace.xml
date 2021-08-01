@@ -4,24 +4,9 @@
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/controllers/auth/loginController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/loginController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/controllers/auth/profileController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/profileController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/controllers/auth/registerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/registerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/javascripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/deleteUser.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/deleteUser.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/emails/emailVerify.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/emails/emailVerify.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/emails/resetPassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/emails/resetPassword.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/login.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/login.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/profile.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/profile.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/register.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/register.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/reset.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/reset.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/resetPassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/resetPassword.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/updatePassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/updatePassword.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/verify.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/verify.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layouts/layout.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/layout.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +68,9 @@
       <workItem from="1627644423428" duration="238000" />
       <workItem from="1627645136109" duration="28335000" />
       <workItem from="1627757174272" duration="12647000" />
-      <workItem from="1627774650268" duration="3966000" />
+      <workItem from="1627774650268" duration="4231000" />
+      <workItem from="1627828473892" duration="250000" />
+      <workItem from="1627829932809" duration="77000" />
     </task>
     <servers />
   </component>
