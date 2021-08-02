@@ -9,7 +9,7 @@ exports.home = function(req, res, next) {
 };
 
 exports.index = function (req,res,next){
-  if(typeof req.cookies.token == 'undefined'){
+  if(!Auth.checkAuth(req,res)){
     res.render('index');
   }
   res.render('index',{

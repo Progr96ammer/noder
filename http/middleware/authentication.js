@@ -48,6 +48,9 @@ const Auth = exports.Auth = (req,res) =>{
 }
 
 exports.checkAuth = (req,res) =>{
+	if(typeof req.cookies.token == 'undefined'){
+		return false;
+	}
 	if (req.cookies.reftoken) {
 		var decoded = jwt.verify(req.cookies.reftoken, process.env.SECRET_KEY)
 		if (decoded) {
