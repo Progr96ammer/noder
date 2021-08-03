@@ -4,6 +4,20 @@ const NodeCache = require( "node-cache" );
 const newCache = new NodeCache( { checkperiod: 1 } );
 const crypto = require('crypto');
 
+const getHttpToken = exports.getHttpToken=(req,res)=>{
+	if(Object.keys(req.cookies).length != 0){
+		var httpToken = req.cookies;
+		return httpToken
+	}
+	else if(req.headers['x-access-token']){
+		var httpToken = JSON.parse(req.headers['x-access-token']).token;
+		return httpToken
+	}
+	else{
+		return 'false'
+	}
+}
+
 const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 	if (firstAttampt){
 		var hashRand = crypto.randomBytes(8).toString('hex');
@@ -22,12 +36,12 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 };
 
 exports.routeAuth = [(req, res, next)=> {
-	if (!req.cookies.reftoken) {
+	if (!getHttpToken(req,res).reftoken) {
 		res.render('./auth/login')
 	}
-	jwt.verify(req.cookies.token,process.env.SECRET_KEY, function(err, decoded) {
+	jwt.verify(getHttpToken(req,res).token,process.env.SECRET_KEY, function(err, decoded) {
 		if (err) {
-			jwt.verify(req.cookies.reftoken, process.env.SECRET_KEY, function(err, decoded) {
+			jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY, function(err, decoded) {
 				if (err) {
 					res.render('./auth/login');
 				}
@@ -40,7 +54,7 @@ exports.routeAuth = [(req, res, next)=> {
 ];
 
 const Auth = exports.Auth = (req,res) =>{
-		var decoded = jwt.verify(req.cookies.reftoken, process.env.SECRET_KEY)
+		var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY)
 			if (decoded) {
 				return {Auth:true,user:decoded.user,session:decoded.session};
 			}
@@ -48,11 +62,8 @@ const Auth = exports.Auth = (req,res) =>{
 }
 
 exports.checkAuth = (req,res) =>{
-	if(typeof req.cookies.token == 'undefined'){
-		return false;
-	}
-	if (req.cookies.reftoken) {
-		var decoded = jwt.verify(req.cookies.reftoken, process.env.SECRET_KEY)
+	if (getHttpToken(req,res).reftoken) {
+		var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY)
 		if (decoded) {
 			return true;
 		}
@@ -62,8 +73,8 @@ exports.checkAuth = (req,res) =>{
 
 
 exports.checkEmailVerify = [(req, res, next)=> {
-	if (req.cookies.reftoken) {
-		var decoded = jwt.verify(req.cookies.reftoken, process.env.SECRET_KEY);
+	if (getHttpToken(req,res).reftoken) {
+		var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY);
 		if (decoded) {
 			User.findById(decoded.user._id, function(err, user){
 				if (err) {
