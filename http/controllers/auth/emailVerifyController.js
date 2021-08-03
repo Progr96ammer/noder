@@ -4,12 +4,17 @@ var jwt = require('jsonwebtoken');
 var User = require('../../../models/userModel');
 var Auth = require('../../middleware/authentication');
 
+const emailVerifyForm = exports.emailVerifyForm = (req, res)=> {
+  res.render('./auth/verify',{
+    auth:true,
+    user:Auth.Auth(req,res).user,
+    sent:req.query.sent,
+  })
+}
+
 const sendEmailVerifyAgain = exports.sendEmailVerifyAgain = (req, res)=> {
   sendEmailVerify(req,res,Auth.Auth(req,res).user._id,function (){
-    res.render('./auth/verify',{
-      auth:Auth.Auth(req,res).Auth,
-      sent:true,
-    });
+    res.send({url:'emailVerifyForm?sent=true'})
   });
 }
 

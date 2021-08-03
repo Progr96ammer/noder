@@ -8,15 +8,9 @@ block content
             .card-body
               form(method='POST' action='' enctype='multipart/form-data')
                 .form-group.row
-                  label.col-md-4.col-form-label.text-md-right(for='firstName') First Name
+                  label.col-md-4.col-form-label.text-md-right(for='name') Name
                   .col-md-6
-                    input#firstName-input.form-control(type='text' name='firstName' value=`${user.firstName}` required='' autocomplete='firstName' autofocus='')
-                    span.invalid-feedback(role='alert')
-                      strong
-                .form-group.row
-                  label.col-md-4.col-form-label.text-md-right(for='lastName') Last Name
-                  .col-md-6
-                    input#lastName-input.form-control(type='text' name='lastName' value=`${user.lastName}` required='' autocomplete='lastName' autofocus='')
+                    input#name-input.form-control(type='text' name='name' value=`${user.name}` required='' autocomplete='name' autofocus='')
                     span.invalid-feedback(role='alert')
                       strong
                 .form-group.row

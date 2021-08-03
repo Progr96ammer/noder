@@ -12,11 +12,7 @@ exports.registerForm = function(req, res, next) {
 };
 
 exports.register = [
-check('firstName')
-.isLength({ min: 3 }).withMessage('Name Must Be At Least 3 Charecter')
-.isLength({ max: 15 }).withMessage('Name Must Be At Most 15 Charecter'),
-
-check('lastName')
+check('name')
 .isLength({ min: 3 }).withMessage('Name Must Be At Least 3 Charecter')
 .isLength({ max: 15 }).withMessage('Name Must Be At Most 15 Charecter'),
 
@@ -71,8 +67,7 @@ return true;
     }
     else{
       const newUser = new User({
-        firstName:req.body.firstName,
-         lastName:req.body.lastName,
+        name:req.body.name,
          email:req.body.email,
          username:req.body.username,
          password:crypto.createHash('md5').update(req.body.password).digest("hex"),
@@ -83,8 +78,7 @@ return true;
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
         emailVerifyController.sendEmailVerify(req,res,newUser._id,function (){
-          Auth.attempt(newUser,res);
-          res.redirect('/home');
+          res.send({url:'emailVerifyForm',token:Auth.attempt(newUser,res)})
         });
       });
     }

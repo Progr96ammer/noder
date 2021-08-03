@@ -81,7 +81,7 @@ exports.checkEmailVerify = [(req, res, next)=> {
 					res.render('./auth/login');
 				}
 				if (!user.verifiedAt) {
-					res.render('./auth/verify',{auth:Auth(req).Auth,user:user});
+					res.redirect('user/emailVerifyForm');
 				}
 				if(!user.sessions[decoded.session]){
 					res.render('index');

@@ -10,5 +10,5 @@ exports.logout = function(req, res) {
     });
     res.clearCookie('token');
     res.clearCookie('reftoken');
-    res.render('index');
+    res.send({url:'/'})
 };

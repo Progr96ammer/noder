@@ -11,11 +11,7 @@ exports.profileForm = function(req, res, next) {
 };
 
 exports.profile = [
-check('firstName')
-.isLength({ min: 3 }).withMessage('Name Must Be At Least 3 Charecter')
-.isLength({ max: 15 }).withMessage('Name Must Be At Most 15 Charecter'),
-
-check('lastName')
+check('name')
 .isLength({ min: 3 }).withMessage('Name Must Be At Least 3 Charecter')
 .isLength({ max: 15 }).withMessage('Name Must Be At Most 15 Charecter'),
 
@@ -75,13 +71,12 @@ check('password')
        res.send({errors: errors.array()});
     }
     else{
-      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{firstName:req.body.firstName,lastName:req.body.lastName,username:req.body.username}, {new: true}, function(err, user){
+      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username}, {new: true}, function(err, user){
       	if (err) {
             res.render('./errors/error',{error:500,msg:"Server Error"});
       	}
       	console.log(user)
-          Auth.attempt(user,res,false,Auth.Auth(req).session);
-          res.redirect('/user/profile');
+          res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
       });
     }
   },

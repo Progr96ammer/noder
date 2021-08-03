@@ -5,8 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userModelSchema = new Schema({
-  firstName: String,
-  lastName: String,
+  name: String,
   sessions: Object,
   email:{
   	required: true,

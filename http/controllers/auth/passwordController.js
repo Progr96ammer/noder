@@ -10,7 +10,9 @@ exports.sendResetPasswordForm = function(req, res) {
   if (Auth.checkAuth(req)){
     res.redirect('/home')
   }
-  res.render('auth/resetPassword')
+  res.render('auth/resetPassword',{
+    sent:req.query.sent,
+  })
 };
 
 exports.sendResetPassword = [
@@ -63,7 +65,7 @@ check('credential')
             subject: "Email Verication", // Subject line
             html: pug.renderFile('./views/auth/emails/resetPassword.pug', {token:token,path:req.protocol+'://'+req.get('host')}),
           });
-          res.render('./auth/resetPassword',{sent:true});
+          res.send({url:'sendResetPassword?sent=true'})
         }
         main().catch(console.error);
       });
@@ -112,8 +114,7 @@ return true;
             if (err) {
               res.render('./errors/error',{error:500,msg:"Server Error"});
             }
-            Auth.attempt(user,res);
-            res.redirect('/home');
+            res.send({url:'/home',token:Auth.attempt(user,res)})
           });
         }
         else{
@@ -170,5 +171,5 @@ exports.updatePassword = [
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
       });
-    res.redirect('/profile');
+    res.send({url:'profile'})
   }]
