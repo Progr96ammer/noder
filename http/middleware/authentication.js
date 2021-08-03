@@ -84,7 +84,7 @@ exports.checkEmailVerify = [(req, res, next)=> {
 					res.redirect('user/emailVerifyForm');
 				}
 				if(!user.sessions[decoded.session]){
-					res.render('index');
+					res.render('./auth/login');
 				}
 				next();
 			});
