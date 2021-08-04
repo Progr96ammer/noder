@@ -16,7 +16,7 @@ const port = 3000
 
 var app = express();
 app.use(cors({
-        origin: 'http://localhost:19006',
+        origin: '*',
         credentials:true,
     }))
 // view engine setup
