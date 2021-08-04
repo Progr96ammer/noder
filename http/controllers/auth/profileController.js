@@ -77,7 +77,7 @@ check('password')
       	}
       	console.log(user)
           res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
-      });
+      }).select("-password");
     }
   },
 ];

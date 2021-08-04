@@ -115,7 +115,7 @@ return true;
               res.render('./errors/error',{error:500,msg:"Server Error"});
             }
             res.send({url:'/home',token:Auth.attempt(user,res)})
-          });
+          }).select("-password");
         }
         else{
           res.render('./errors/error',{error:401,msg:"Unauthorized"});

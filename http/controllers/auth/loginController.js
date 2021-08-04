@@ -64,7 +64,7 @@ check('password')
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
         res.send({url:'/home',token:Auth.attempt(user,res)})
-      });
+      }).select("-password");
     }
   },
 ];
