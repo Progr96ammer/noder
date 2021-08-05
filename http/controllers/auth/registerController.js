@@ -52,7 +52,7 @@ check('username')
 check('password')
 .isLength({ min: 8 }).withMessage('Password Must Be At Least 8 Charecter'),
 
-check('confirm-password')
+check('confirmPassword')
 .isLength({ min: 8 }).withMessage('Confirm Password Must Be At Least 8 Charecter')
 .custom((value, { req }) => {
 if (value !== req.body.password) {

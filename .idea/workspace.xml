@@ -4,6 +4,8 @@
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/registerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/registerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/register.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/register.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/updatePassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/updatePassword.pug" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +77,8 @@
       <workItem from="1628078850701" duration="1254000" />
       <workItem from="1628081169887" duration="5297000" />
       <workItem from="1628087059607" duration="1723000" />
-      <workItem from="1628093142309" duration="5161000" />
+      <workItem from="1628093142309" duration="6638000" />
+      <workItem from="1628169624884" duration="870000" />
     </task>
     <servers />
   </component>
