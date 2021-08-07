@@ -81,7 +81,9 @@ return true;
           if (err) {
             res.render('./errors/error',{error:500,msg:"Server Error"});
           }
-          emailVerifyController.sendEmailVerify(req,res,user._id);
+          emailVerifyController.sendEmailVerify(req,res,user._id,function (){
+            res.send({url:'emailVerifyForm',token:Auth.attempt(user,res)})
+          });
         });
       });
     }

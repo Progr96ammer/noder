@@ -19,9 +19,9 @@ const sendEmailVerifyAgain = exports.sendEmailVerifyAgain = (req, res)=> {
   });
 }
 
-const sendEmailVerify = exports.sendEmailVerify = (req,res,id)=> {
+const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
   var rand = Math.floor(Math.random()*899999+100000);
-  User.findOneAndUpdate({_id:id},{verification:{token: rand, date: Date()}},{new:true}, function(err, user) {
+  User.findOneAndUpdate({_id:id},{$set:{'verification.email':{token: rand, date: Date()}}},{new:true}, function(err, user) {
     if (!user) {
       res.render('./errors/error', {error: 500, msg: "Server Error"});
     }
@@ -51,8 +51,8 @@ const sendEmailVerify = exports.sendEmailVerify = (req,res,id)=> {
       });
     }
     main().catch(console.error);
-    res.send({url:'emailVerifyForm',token:Auth.attempt(user,res)})
-  }).select("-password");
+  });
+  cb()
 }
 
 exports.verifyEmail = [
@@ -68,7 +68,7 @@ exports.verifyEmail = [
             else if (!user) {
               reject(new Error('Incorrect Password'))
             }
-            else if(user.verification.token != value) {
+            else if(user.verification.email.token != value) {
               reject(new Error('Incorrect Password!'))
             }
             resolve(true)
@@ -85,13 +85,13 @@ exports.verifyEmail = [
         if (err) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        if (new Date(new Date(user.verification.date).setHours(new Date(user.verification.date).getHours() + 1)) >= new Date()){
-          User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{verification:{token:'verified',date:Date()}},{new:true}, function(err,user) {
+        if (new Date(new Date(user.verification.email.date).setHours(new Date(user.verification.email.date).getHours() + 1)) >= new Date()){
+          User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{$set:{'verification.email':{token: 'verified', date: Date()}}},{new:true}, function(err,user) {
             if (err) {
               res.render('./errors/error', {error: 500, msg: "Server Error"});
             }
             res.send({url:'/home',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
-          }).select("-password");
+          }).select("-password").select("-verification.email.token").select("-verification.password.token");
         }
       });
     }

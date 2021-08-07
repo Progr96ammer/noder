@@ -76,7 +76,7 @@ check('password')
             res.render('./errors/error',{error:500,msg:"Server Error"});
       	}
           res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
-      }).select("-password");
+      }).select("-password").select("-verification.email.token").select("-verification.password.token");
     }
   },
 ];

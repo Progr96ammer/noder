@@ -15,6 +15,13 @@ exports.sendResetPasswordForm = function(req, res) {
   })
 };
 
+exports.confirmResetPasswordForm = function(req, res) {
+  res.render('auth/confirmResetPasswordCode',{
+    credential:req.query.credential,
+    again:req.query.again,
+  })
+};
+
 exports.sendResetPassword = [
 check('credential')
 .custom((value, {req}) => {
@@ -36,11 +43,11 @@ check('credential')
        res.send({errors: errors.array()});
     }
     else{
-      User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
+      var rand = Math.floor(Math.random()*899999+100000);
+      User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{$set:{'verification.password':{token: rand, date: Date()}}}, function(err, user){
         if (!user) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        var token = jwt.sign({ id:user._id,date:Date()}, process.env.SECRET_KEY, { expiresIn: 60*60 });
         // async..await is not allowed in global scope, must use a wrapper
         async function main() {
           // Generate test SMTP service account from ethereal.email
@@ -62,10 +69,14 @@ check('credential')
           let info = await transporter.sendMail({
             from: process.env.FROM, // sender address
             to: user.email, // list of receivers
-            subject: "Email Verication", // Subject line
-            html: pug.renderFile('./views/auth/emails/resetPassword.pug', {token:token,path:req.protocol+'://'+req.get('host')}),
+            subject: "Password Reset", // Subject line
+            html: pug.renderFile('./views/auth/emails/resetPassword.pug', {token:rand}),
           });
-          res.send({url:'sendResetPassword?sent=true'})
+          var again;
+          if (req.body.again){
+            res.send({url:'confirmResetPasswordForm?credential='+req.body.credential+'&again='+req.body.again+''})
+          }
+          res.send({url:'confirmResetPasswordForm?credential='+req.body.credential+''})
         }
         main().catch(console.error);
       });
@@ -115,7 +126,7 @@ return true;
               res.render('./errors/error',{error:500,msg:"Server Error"});
             }
             res.send({url:'/home',token:Auth.attempt(user,res)})
-          }).select("-password");
+          }).select("-password").select("-verification.email.token").select("-verification.password.token");
         }
         else{
           res.render('./errors/error',{error:401,msg:"Unauthorized"});

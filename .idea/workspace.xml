@@ -2,15 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/views/auth/confirmResetPasswordCode.pug" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/loginController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/loginController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/profileController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/profileController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/registerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/registerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/middleware/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/middleware/authentication.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/userModel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/emails/emailVerify.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/emails/emailVerify.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/emails/resetPassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/emails/resetPassword.pug" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/auth/verify.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/verify.pug" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,6 +91,7 @@
       <workItem from="1628240951104" duration="3000" />
       <workItem from="1628269151584" duration="14971000" />
       <workItem from="1628289796915" duration="3823000" />
+      <workItem from="1628343870124" duration="16694000" />
     </task>
     <servers />
   </component>

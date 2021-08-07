@@ -18,12 +18,13 @@ router.post('/logout',Auth.routeAuth, logoutController.logout);
 
 router.get('/sendResetPassword', passwordController.sendResetPasswordForm);
 router.post('/sendResetPassword', Auth.rateLimiter, passwordController.sendResetPassword);
+router.get('/confirmResetPasswordForm', Auth.rateLimiter, passwordController.confirmResetPasswordForm);
 
 router.get('/resetpassword/email', passwordController.resetPasswordForm);
 router.post('/resetPassword', Auth.rateLimiter, passwordController.resetPassword);
 
 router.post('/sendEmailVerify',Auth.routeAuth, Auth.rateLimiter, emailVerifyController.sendEmailVerifyAgain);
-router.get('/emailVerifyForm', emailVerifyController.emailVerifyForm);
+router.get('/emailVerifyForm/', emailVerifyController.emailVerifyForm);
 router.post('/verify/email', emailVerifyController.verifyEmail);
 
 router.get('/deleteUser', Auth.routeAuth, deleteUserController.deleteUserForm);
