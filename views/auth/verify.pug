@@ -5,15 +5,27 @@ block content
         .col-md-8
           .card
             .card-header Verify Your Email Address
-            .card-body
+            .card-body.text-center
               if sent
                 .alert.alert-success(role='alert')
                   | A fresh verification link has been sent to your email address.
               |Before proceeding, please check your email for a verification link.
               br
-              |If you did not receive the email
-              form.d-inline(method='POST' action='/user/sendEmailVerify')
-                #form-submit.btn.btn-link.p-0.m-0.align-baseline click here to request another
+              br
+              form.text-left(method='POST' action="/user/verify/email")
+                .form-group.row
+                  label.col-md-4.col-form-label.text-md-right(for='verificationCode') Verification code
+                  .col-md-6
+                    input#verificationCode-input.form-control(type='text' name='verificationCode' value='' required='' autocomplete='verificationCode' autofocus='')
+                    span.invalid-feedback(role='alert')
+                      strong
+                .form-group.row.mb-0
+                  .col-md-8.offset-md-4
+                    #form-submit.btn.btn-primary
+                      | Verify
+              |If you did not receive the email&nbsp
+              form.d-inline
+                #sendEmailVerifycationAgain.btn.btn-link.p-0.m-0.align-baseline click here to request another
               label#attempts-input.form-check-label(for='remember')
                 span.invalid-feedback(role='alert')
                   strong

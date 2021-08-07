@@ -80,7 +80,7 @@ exports.checkEmailVerify = [(req, res, next)=> {
 				if (err) {
 					res.render('./auth/login');
 				}
-				if (!user.verifiedAt) {
+				if (user.verification.token != 'verified') {
 					res.redirect('user/emailVerifyForm');
 				}
 				if(!user.sessions[decoded.session]){

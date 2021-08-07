@@ -18,10 +18,7 @@ var userModelSchema = new Schema({
     unique: true
   },
   password: String,
-  verifiedAt:{
-  	type:Date,
-  	sparse: true
-  },
+  verification:Object,
 });
 // Compile model from schema
 var users = mongoose.model('users', userModelSchema );

@@ -24,7 +24,7 @@ router.post('/resetPassword', Auth.rateLimiter, passwordController.resetPassword
 
 router.post('/sendEmailVerify',Auth.routeAuth, Auth.rateLimiter, emailVerifyController.sendEmailVerifyAgain);
 router.get('/emailVerifyForm', emailVerifyController.emailVerifyForm);
-router.get('/verify/email', emailVerifyController.verifyEmail);
+router.post('/verify/email', emailVerifyController.verifyEmail);
 
 router.get('/deleteUser', Auth.routeAuth, deleteUserController.deleteUserForm);
 router.post('/deleteUser', Auth.routeAuth, Auth.rateLimiter, deleteUserController.deleteUser);

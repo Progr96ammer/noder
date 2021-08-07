@@ -3,9 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/profileController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/profileController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/registerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/registerController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/register.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/register.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/auth/updatePassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/updatePassword.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/middleware/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/middleware/authentication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/userModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/emails/emailVerify.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/emails/emailVerify.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/verify.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/verify.pug" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +84,11 @@
       <workItem from="1628081169887" duration="5297000" />
       <workItem from="1628087059607" duration="1723000" />
       <workItem from="1628093142309" duration="6638000" />
-      <workItem from="1628169624884" duration="870000" />
+      <workItem from="1628169624884" duration="5610000" />
+      <workItem from="1628196347507" duration="1630000" />
+      <workItem from="1628240951104" duration="3000" />
+      <workItem from="1628269151584" duration="14971000" />
+      <workItem from="1628289796915" duration="3823000" />
     </task>
     <servers />
   </component>

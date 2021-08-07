@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const { check, validationResult } = require('express-validator');
 const pug = require('pug');
 var jwt = require('jsonwebtoken');
 var User = require('../../../models/userModel');
@@ -18,12 +19,12 @@ const sendEmailVerifyAgain = exports.sendEmailVerifyAgain = (req, res)=> {
   });
 }
 
-const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
-  User.findById(id, function(err, user){
+const sendEmailVerify = exports.sendEmailVerify = (req,res,id)=> {
+  var rand = Math.floor(Math.random()*899999+100000);
+  User.findOneAndUpdate({_id:id},{verification:{token: rand, date: Date()}},{new:true}, function(err, user) {
     if (!user) {
-      res.render('./errors/error',{error:500,msg:"Server Error"});
+      res.render('./errors/error', {error: 500, msg: "Server Error"});
     }
-    var token = jwt.sign({ id:user._id,date:Date()}, process.env.SECRET_KEY, { expiresIn: 60*60 });
     // async..await is not allowed in global scope, must use a wrapper
     async function main() {
       // Generate test SMTP service account from ethereal.email
@@ -46,26 +47,52 @@ const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
         from: process.env.FROM, // sender address
         to: user.email, // list of receivers
         subject: "Email Verication", // Subject line
-        html: pug.renderFile('./views/auth/emails/emailVerify.pug', {token:token,path:req.protocol+'://'+req.get('host')}),
+        html: pug.renderFile('./views/auth/emails/emailVerify.pug', {token:rand}),
       });
     }
     main().catch(console.error);
-  });
-  cb();
+    res.send({url:'emailVerifyForm',token:Auth.attempt(user,res)})
+  }).select("-password");
 }
 
-
-exports.verifyEmail = function(req, res) {
-  var decoded = jwt.verify(req.query.token, process.env.SECRET_KEY);
-    if (decoded) {
-      User.updateOne({_id:decoded.id},{verifiedAt:Date()}, function(err){
+exports.verifyEmail = [
+  check('verificationCode')
+      .notEmpty().withMessage('Verifycation code required!')
+      .bail()
+      .custom((value, {req}) => {
+        return new Promise((resolve, reject) => {
+          User.findById(Auth.Auth(req).user._id, function(err, user){
+            if(err) {
+              reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+            }
+            else if (!user) {
+              reject(new Error('Incorrect Password'))
+            }
+            else if(user.verification.token != value) {
+              reject(new Error('Incorrect Password!'))
+            }
+            resolve(true)
+          });
+        });
+      }),
+  (req, res, next)=> {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+      res.send({errors: errors.array()});
+    }
+    else{
+      User.findById(Auth.Auth(req).user._id, function(err,user){
         if (err) {
           res.render('./errors/error',{error:500,msg:"Server Error"});
         }
-        res.redirect('/home');
+        if (new Date(new Date(user.verification.date).setHours(new Date(user.verification.date).getHours() + 1)) >= new Date()){
+          User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{verification:{token:'verified',date:Date()}},{new:true}, function(err,user) {
+            if (err) {
+              res.render('./errors/error', {error: 500, msg: "Server Error"});
+            }
+            res.send({url:'/home',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
+          }).select("-password");
+        }
       });
     }
-    else{
-      res.render('./errors/error',{error:408,msg:"Request Time Out"});
-    }
-};
+  }]

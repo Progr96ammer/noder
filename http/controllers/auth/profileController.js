@@ -75,7 +75,6 @@ check('password')
       	if (err) {
             res.render('./errors/error',{error:500,msg:"Server Error"});
       	}
-      	console.log(user)
           res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
       }).select("-password");
     }
