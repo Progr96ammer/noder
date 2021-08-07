@@ -109,7 +109,14 @@ exports.confirmResetPassword = [
       res.send({errors: errors.array()});
     }
     else{
-      res.send({url:'resetpassword/email?credential='+req.body.credential+''})
+        User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err,user) {
+          if (err) {
+            res.render('./errors/error', {error: 500, msg: "Server Error"});
+          }
+          if (new Date(new Date(user.verification.password.date).setHours(new Date(user.verification.password.date).getHours() + 1)) >= new Date()){
+            res.send({url:'resetpassword/email?credential='+req.body.credential+''})
+          }
+        });
     }
   }]
 
