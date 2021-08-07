@@ -75,11 +75,11 @@ return true;
         });
       newUser.save(function (err , saveRes) {
         if (err) {
-          res.render('./errors/error',{error:500,msg:"Server Error"});
+          res.render('error',{errnum:500,errmsg:"Server Error"});
         }
         User.findById(newUser._id, function(err, user){
           if (err) {
-            res.render('./errors/error',{error:500,msg:"Server Error"});
+            res.render('error',{errnum:500,errmsg:"Server Error"});
           }
           emailVerifyController.sendEmailVerify(req,res,user._id,function (){
             res.send({url:'emailVerifyForm',token:Auth.attempt(user,res)})

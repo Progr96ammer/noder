@@ -1,7 +1,10 @@
 head
   meta(charset='utf-8')
   meta(name='viewport' content='width=device-width, initial-scale=1')
-  title Page Not Found
+  if errnum
+    title #{errmsg}
+  else
+    title Page Not Found
   // Fonts
   link(rel='dns-prefetch' href='//fonts.gstatic.com')
   link(href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet')
@@ -15,6 +18,13 @@ head
   .max-w-xl.mx-auto(class='sm:px-6 lg:px-8')
     .flex.items-center.pt-8(class='sm:justify-start sm:pt-0')
       .px-4.text-lg.text-gray-500.border-r.border-gray-400.tracking-wider
-        | 404
+        if errnum
+          | #{errnum}
+        else
+          | 404
       .ml-4.text-lg.text-gray-500.uppercase.tracking-wider
-        | Page Not Found
+        if errnum
+          | #{errmsg}
+        else
+          | Page Not Found
+

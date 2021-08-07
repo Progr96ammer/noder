@@ -5,7 +5,7 @@ exports.logout = function(req, res) {
     var session = 'sessions.'+Auth.Auth(req,res).session;
     User.updateOne({_id:Auth.Auth(req,res).user._id},{ $unset: {[session]:''}}, function(err){
         if (err) {
-            res.render('./errors/error',{error:500,msg:"Server Error"});
+            res.render('error',{errnum:500,errmsg:"Server Error"});
         }
     });
     res.clearCookie('token');

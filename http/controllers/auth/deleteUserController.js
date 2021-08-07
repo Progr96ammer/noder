@@ -41,7 +41,7 @@ check('password')
     else{
       User.deleteOne({ _id:Auth.Auth(req).user._id}, function(err, user){
           if(err) {
-            res.render('./errors/error',{error:500,msg:"Server Error"});
+              res.render('error',{errnum:500,errmsg:"Server Error"});
           }
           	logout.logout(req,res);
         });
