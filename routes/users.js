@@ -19,6 +19,7 @@ router.post('/logout',Auth.routeAuth, logoutController.logout);
 router.get('/sendResetPassword', passwordController.sendResetPasswordForm);
 router.post('/sendResetPassword', Auth.rateLimiter, passwordController.sendResetPassword);
 router.get('/confirmResetPasswordForm', Auth.rateLimiter, passwordController.confirmResetPasswordForm);
+router.post('/confirmResetPassword', Auth.rateLimiter, passwordController.confirmResetPassword);
 
 router.get('/resetpassword/email', passwordController.resetPasswordForm);
 router.post('/resetPassword', Auth.rateLimiter, passwordController.resetPassword);

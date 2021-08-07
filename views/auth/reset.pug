@@ -8,7 +8,7 @@ block content
             .card-body
               form(method='POST' action='/user/resetPassword')
                 if !auth
-                  input#token-input(type='hidden' name='token' value=`${token}`)
+                  input#credential-input(type='hidden' name='credential' value=`${credential}`)
                 .form-group.row
                   label.col-md-4.col-form-label.text-md-right(for='password') New Password
                   .col-md-6

@@ -83,17 +83,41 @@ check('credential')
     }
 }];
 
+exports.confirmResetPassword = [
+  check('verificationCode')
+      .notEmpty().withMessage('Verifycation code required!')
+      .bail()
+      .custom((value, {req}) => {
+        return new Promise((resolve, reject) => {
+          User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
+            if(err) {
+              reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+            }
+            else if (!user) {
+              reject(new Error('Incorrect Password'))
+            }
+            else if(user.verification.password.token != value) {
+              reject(new Error('Incorrect Password!'))
+            }
+            resolve(true)
+          });
+        });
+      }),
+  (req, res, next)=> {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+      res.send({errors: errors.array()});
+    }
+    else{
+      res.send({url:'resetpassword/email?credential='+req.body.credential+''})
+    }
+  }]
+
 
 
 exports.resetPasswordForm = function(req, res) {
-  if (req.query.token) {
-    var decoded = jwt.verify(req.query.token, process.env.SECRET_KEY);
-      if (decoded) {
-        res.render('./auth/reset',{token:req.query.token});
-      }
-      else{
-        res.render('./errors/error',{error:408,msg:"Request Time Out"});
-      }
+  if (req.query.credential) {
+    res.render('./auth/reset',{credential:req.query.credential});
   }
 };
 
@@ -115,22 +139,16 @@ return true;
        res.send({errors: errors.array()});
     }
     else{
-      if (!req.body.token) {
+      if (!req.body.credential) {
         res.render('./errors/error',{error:401,msg:"Unauthorized"});
       }
       else{
-        var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
-        if (decoded) {
-          User.findOneAndUpdate({_id:decoded.id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")},{new:true}, function(err,user){
-            if (err) {
-              res.render('./errors/error',{error:500,msg:"Server Error"});
-            }
-            res.send({url:'/home',token:Auth.attempt(user,res)})
-          }).select("-password").select("-verification.email.token").select("-verification.password.token");
-        }
-        else{
-          res.render('./errors/error',{error:401,msg:"Unauthorized"});
-        }
+        User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex"),$unset:{'verification.password':''}},{new:true}, function(err,user){
+          if (err) {
+            res.render('./errors/error',{error:500,msg:"Server Error"});
+          }
+          res.send({url:'/home',token:Auth.attempt(user,res)})
+        }).select("-password").select("-verification.email.token").select("-verification.password.token");
       }
     }
 }]
