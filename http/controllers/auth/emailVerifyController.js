@@ -23,7 +23,7 @@ const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
   var rand = Math.floor(Math.random()*899999+100000);
   User.findOneAndUpdate({_id:id},{$set:{'verification.email':{token: rand, date: Date()}}},{new:true}, function(err, user) {
     if (!user) {
-      res.render('error',{errnum:500,errmsg:"Server Error"});
+      res.send({url:'/error?errnum=500&errmsg=Server Error'});
     }
     // async..await is not allowed in global scope, must use a wrapper
     async function main() {
@@ -65,9 +65,6 @@ exports.verifyEmail = [
             if(err) {
               reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
             }
-            else if (!user) {
-              reject(new Error('Incorrect Password'))
-            }
             else if(user.verification.email.token != value) {
               reject(new Error('Incorrect Password!'))
             }
@@ -83,12 +80,12 @@ exports.verifyEmail = [
     else{
       User.findById(Auth.Auth(req).user._id, function(err,user){
         if (err) {
-          res.render('error',{errnum:500,errmsg:"Server Error"});
+          res.send({url:'/error?errnum=500&errmsg=Server Error'});
         }
         if (new Date(new Date(user.verification.email.date).setHours(new Date(user.verification.email.date).getHours() + 1)) >= new Date()){
           User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{$set:{'verification.email':{token: 'verified', date: Date()}}},{new:true}, function(err,user) {
             if (err) {
-              res.render('error',{errnum:500,errmsg:"Server Error"});
+              res.send({url:'/error?errnum=500&errmsg=Server Error'});
             }
             res.send({url:'/home',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
           }).select("-password").select("-verification.email.token").select("-verification.password.token");

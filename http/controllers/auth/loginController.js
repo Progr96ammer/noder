@@ -61,7 +61,7 @@ check('password')
     else{
       User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
         if (err) {
-          res.render('error',{errnum:500,errmsg:"Server Error"});
+          res.send({url:'/error?errnum=500&errmsg=Server Error'});
         }
         res.send({url:'/home',token:Auth.attempt(user,res)})
       }).select("-password").select("-verification.email.token").select("-verification.password.token");

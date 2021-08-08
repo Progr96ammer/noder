@@ -46,7 +46,7 @@ check('credential')
       var rand = Math.floor(Math.random()*899999+100000);
       User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{$set:{'verification.password':{token: rand, date: Date()}}}, function(err, user){
         if (!user) {
-          res.render('error',{errnum:500,errmsg:"Server Error"});
+          res.send({url:'/error?errnum=500&errmsg=Server Error'});
         }
         // async..await is not allowed in global scope, must use a wrapper
         async function main() {
@@ -94,10 +94,10 @@ exports.confirmResetPassword = [
               reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
             }
             else if (!user) {
-              reject(new Error('srths'))
+              reject(new Error('Incorrect Code!'))
             }
             else if(user.verification.password.token != value) {
-              reject(new Error('Incorrect Password!'))
+              reject(new Error('Incorrect Code!'))
             }
             resolve(true)
           });
@@ -111,7 +111,7 @@ exports.confirmResetPassword = [
     else{
         User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err,user) {
           if (err) {
-            res.render('error',{errnum:500,errmsg:"Server Error"});
+            res.send({url:'/error?errnum=500&errmsg=Server Error'});
           }
           if (new Date(new Date(user.verification.password.date).setHours(new Date(user.verification.password.date).getHours() + 1)) >= new Date()){
             res.send({url:'resetpassword/email?credential='+req.body.credential+''})
@@ -147,12 +147,12 @@ return true;
     }
     else{
       if (!req.body.credential) {
-        res.render('error',{errnum:401,errmsg:"Unauthorized"});
+        res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
       }
       else{
         User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex"),$unset:{'verification.password':''}},{new:true}, function(err,user){
           if (err) {
-            res.render('error',{errnum:500,errmsg:"Server Error"});
+            res.send({url:'/error?errnum=500&errmsg=Server Error'});
           }
           res.send({url:'/home',token:Auth.attempt(user,res)})
         }).select("-password").select("-verification.email.token").select("-verification.password.token");
@@ -204,7 +204,7 @@ exports.updatePassword = [
     }
       User.updateOne({_id:Auth.Auth(req).user._id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")}, function(err){
         if (err) {
-          res.render('error',{errnum:500,errmsg:"Server Error"});
+          res.send({url:'/error?errnum=500&errmsg=Server Error'});
         }
       });
     res.send({url:'profile'})

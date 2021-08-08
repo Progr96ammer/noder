@@ -73,7 +73,7 @@ check('password')
     else{
       User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username}, {new: true}, function(err, user){
       	if (err) {
-            res.render('error',{errnum:500,errmsg:"Server Error"});
+            res.send({url:'/error?errnum=500&errmsg=Server Error'});
       	}
           res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
       }).select("-password").select("-verification.email.token").select("-verification.password.token");

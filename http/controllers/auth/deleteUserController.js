@@ -23,9 +23,6 @@ check('password')
           if(err) {
             reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
           }
-          else if (!user) {
-            reject(new Error('Incorrect Password'))
-          }
           else if(crypto.createHash('md5').update(value).digest("hex")!== user.password) {
             reject(new Error('Incorrect Password!'))
           }
@@ -41,7 +38,7 @@ check('password')
     else{
       User.deleteOne({ _id:Auth.Auth(req).user._id}, function(err, user){
           if(err) {
-              res.render('error',{errnum:500,errmsg:"Server Error"});
+              res.send({url:'/error?errnum=500&errmsg=Server Error'});
           }
           	logout.logout(req,res);
         });
