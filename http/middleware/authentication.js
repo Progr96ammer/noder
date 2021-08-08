@@ -24,7 +24,7 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 		var session = 'sessions.'+hashRand;
 		User.updateOne({_id:user._id},{$set:{[session]:{date:new Date()}}}, function(err){
 			if (err) {
-				res.render('./auth/login');
+				res.send({url:'/error?errnum=500&errmsg=Server Error'});
 			}
 		});
 	}
@@ -50,8 +50,7 @@ exports.routeAuth = [(req, res, next)=> {
 		}
 		next();
 	});
-}
-];
+}];
 
 const Auth = exports.Auth = (req,res) =>{
 		var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY)
