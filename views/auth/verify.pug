@@ -21,11 +21,11 @@ block content
                       strong
                 .form-group.row.mb-0
                   .col-md-8.offset-md-4
-                    #form-submit.btn.btn-primary
+                    .form-submit.btn.btn-primary
                       | Verify
               |If you did not receive the email&nbsp
-              form.d-inline
-                #sendEmailVerifycationAgain.btn.btn-link.p-0.m-0.align-baseline click here to request another code
+              form.d-inline(method='POST' action="/user/sendEmailVerify")
+                .form-submit.btn.btn-link.p-0.m-0.align-baseline click here to request another code
               label#attempts-input.form-check-label(for='remember')
                 span.invalid-feedback(role='alert')
                   strong

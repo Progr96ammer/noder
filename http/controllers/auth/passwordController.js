@@ -94,7 +94,7 @@ exports.confirmResetPassword = [
               reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
             }
             else if (!user) {
-              reject(new Error('Incorrect Password'))
+              reject(new Error('srths'))
             }
             else if(user.verification.password.token != value) {
               reject(new Error('Incorrect Password!'))

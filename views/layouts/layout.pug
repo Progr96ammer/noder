@@ -37,7 +37,8 @@ head
               .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdown')
                 a#profile.dropdown-item(href='/user/profile') Profile
                 hr.m-1
-                a#logout.dropdown-item() Logout
+                form(method='POST' action="/user/logout")
+                  a.form-submit.dropdown-item() Logout
   main.py-4
     block content
 //- footer#contact-me.page-footer.font-small.bg-dark.pt-4(style='min-height: 14%;')

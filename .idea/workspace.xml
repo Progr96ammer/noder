@@ -3,7 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/confirmResetPasswordCode.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/confirmResetPasswordCode.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/deleteUser.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/deleteUser.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/login.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/login.pug" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/auth/profile.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/profile.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/register.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/register.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/reset.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/reset.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/resetPassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/resetPassword.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/updatePassword.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/updatePassword.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth/verify.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/auth/verify.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layouts/layout.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/layout.pug" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +95,7 @@
       <workItem from="1628343870124" duration="27593000" />
       <workItem from="1628380211819" duration="829000" />
       <workItem from="1628426090342" duration="5263000" />
+      <workItem from="1628452495831" duration="1514000" />
     </task>
     <servers />
   </component>
