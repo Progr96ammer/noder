@@ -6,14 +6,18 @@ $( document ).ready(function() {
             data:$(this).closest('form').serialize(),
             success:function(response){
                 if (response == 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'){
-                    window.location.replace('/home');
+                    alert('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+                    window.location.reload();
                 }
-                if (response.errors) {
+                else if (response.errors) {
                     $(".invalid-feedback").remove();
                     $("*").removeClass("is-invalid");
                     for (var i = 0; i < response.errors.length; i++) {
                         if (response.errors[i].msg =='Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'){
-                            window.location.replace('/home');
+                            alert('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+                            window.location.reload();
+                            break;
+
                         }
                         $("#"+response.errors[i].param+"-input").addClass("is-invalid");
                         $("#"+response.errors[i].param+"-input").after('<span class="invalid-feedback d-block"><strong id="message-text">'+response.errors[i].msg+'</strong></span>');
