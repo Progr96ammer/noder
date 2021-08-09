@@ -99,6 +99,9 @@ exports.confirmResetPassword = [
             else if(user.verification.password.token != value) {
               reject(new Error('Incorrect Code!'))
             }
+            else if (new Date(new Date(user.verification.password.date).setHours(new Date(user.verification.password.date).getHours() + 1)) <= new Date()){
+              reject(new Error('Code expired!'))
+            }
             resolve(true)
           });
         });
@@ -113,9 +116,7 @@ exports.confirmResetPassword = [
           if (err) {
             res.send({url:'/error?errnum=500&errmsg=Server Error'});
           }
-          if (new Date(new Date(user.verification.password.date).setHours(new Date(user.verification.password.date).getHours() + 1)) >= new Date()){
-            res.send({url:'resetpassword/email?credential='+req.body.credential+''})
-          }
+          res.send({url:'resetpassword/email?credential='+req.body.credential+''})
         });
     }
   }]

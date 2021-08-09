@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/middleware/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/middleware/authentication.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +87,8 @@
       <workItem from="1628380211819" duration="829000" />
       <workItem from="1628426090342" duration="5263000" />
       <workItem from="1628452495831" duration="2390000" />
-      <workItem from="1628457187523" duration="4096000" />
+      <workItem from="1628457187523" duration="6029000" />
+      <workItem from="1628508145652" duration="6455000" />
     </task>
     <servers />
   </component>

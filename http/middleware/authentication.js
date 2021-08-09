@@ -18,6 +18,15 @@ const getHttpToken = exports.getHttpToken=(req,res)=>{
 	}
 }
 
+const reqType = exports.reqType=(req,res)=>{
+	if(Object.keys(req.cookies).length != 0){
+		return 'browser'
+	}
+	else if(req.headers['x-access-token']){
+		return 'api'
+	}
+}
+
 const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 	if (firstAttampt){
 		var hashRand = crypto.randomBytes(8).toString('hex');
@@ -37,13 +46,19 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 
 exports.routeAuth = [(req, res, next)=> {
 	if (!getHttpToken(req,res).reftoken) {
+		if (reqType(req)=='api'){
+			res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+		}
 		res.render('./auth/login')
 	}
 	jwt.verify(getHttpToken(req,res).token,process.env.SECRET_KEY, function(err, decoded) {
 		if (err) {
 			jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY, function(err, decoded) {
 				if (err) {
-					res.render('./auth/login');
+					if (reqType(req)=='api'){
+						res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+					}
+					res.render('./auth/login')
 				}
 				attempt(decoded.user,res,false,decoded.session);
 			})
@@ -57,7 +72,10 @@ const Auth = exports.Auth = (req,res) =>{
 			if (decoded) {
 				return {Auth:true,user:decoded.user,session:decoded.session};
 			}
-	res.render('./auth/login');
+			if (reqType(req)=='api'){
+				res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+			}
+		res.render('./auth/login')
 }
 
 exports.checkAuth = (req,res) =>{
@@ -77,13 +95,22 @@ exports.checkEmailVerify = [(req, res, next)=> {
 		if (decoded) {
 			User.findById(decoded.user._id, function(err, user){
 				if (err) {
-					res.render('./auth/login');
+					if (reqType(req)=='api'){
+						res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+					}
+					res.render('./auth/login')
 				}
 				if (user.verification.email.token != 'verified') {
+					if (reqType(req)=='api'){
+						res.send({url:'user/emailVerifyForm'});
+					}
 					res.redirect('user/emailVerifyForm');
 				}
 				if(!user.sessions[decoded.session]){
-					res.render('./auth/login');
+					if (reqType(req)=='api'){
+						res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+					}
+					res.render('./auth/login')
 				}
 				next();
 			});

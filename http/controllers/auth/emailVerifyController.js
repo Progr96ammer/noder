@@ -65,8 +65,14 @@ exports.verifyEmail = [
             if(err) {
               reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
             }
+            else if (!user) {
+              reject(new Error('Incorrect Code!'))
+            }
             else if(user.verification.email.token != value) {
               reject(new Error('Incorrect Password!'))
+            }
+            else if (new Date(new Date(user.verification.email.date).setHours(new Date(user.verification.email.date).getHours() + 1)) <= new Date()){
+              reject(new Error('Code expired!'))
             }
             resolve(true)
           });
@@ -82,14 +88,12 @@ exports.verifyEmail = [
         if (err) {
           res.send({url:'/error?errnum=500&errmsg=Server Error'});
         }
-        if (new Date(new Date(user.verification.email.date).setHours(new Date(user.verification.email.date).getHours() + 1)) >= new Date()){
-          User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{$set:{'verification.email':{token: 'verified', date: Date()}}},{new:true}, function(err,user) {
-            if (err) {
-              res.send({url:'/error?errnum=500&errmsg=Server Error'});
-            }
-            res.send({url:'/home',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
-          }).select("-password").select("-verification.email.token").select("-verification.password.token");
-        }
+        User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{$set:{'verification.email':{token: 'verified', date: Date()}}},{new:true}, function(err,user) {
+          if (err) {
+            res.send({url:'/error?errnum=500&errmsg=Server Error'});
+          }
+          res.send({url:'/home',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
+        }).select("-password").select("-verification.email.token").select("-verification.password.token");
       });
     }
   }]
