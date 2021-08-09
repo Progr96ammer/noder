@@ -22,7 +22,7 @@ check('email')
     return new Promise((resolve, reject) => {
       User.findOne({email:req.body.email}, function(err, user){
         if(err) {
-          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
         if(Boolean(user)) {
           reject(new Error('E-mail already in use'))
@@ -39,7 +39,7 @@ check('username')
     return new Promise((resolve, reject) => {
       User.findOne({username:req.body.username}, function(err, user){
         if(err) {
-          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
         if(Boolean(user)) {
           reject(new Error('Username already in use'))
@@ -75,11 +75,11 @@ return true;
         });
       newUser.save(function (err , saveRes) {
         if (err) {
-          res.send({url:'/error?errnum=500&errmsg=Server Error'});
+          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
         User.findById(newUser._id, function(err, user){
-          if (err) {
-            res.send({url:'/error?errnum=500&errmsg=Server Error'});
+          if (err || !user) {
+            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }
           emailVerifyController.sendEmailVerify(req,res,user._id,function (){
             res.send({url:'emailVerifyForm',token:Auth.attempt(user,res)})

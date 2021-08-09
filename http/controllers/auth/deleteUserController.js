@@ -20,8 +20,8 @@ check('password')
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
         User.findById(Auth.Auth(req).user._id, function(err, user){
-          if(err) {
-            reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+          if(err || !user) {
+            reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
           }
           else if(crypto.createHash('md5').update(value).digest("hex")!== user.password) {
             reject(new Error('Incorrect Password!'))
@@ -38,7 +38,7 @@ check('password')
     else{
       User.deleteOne({ _id:Auth.Auth(req).user._id}, function(err, user){
           if(err) {
-              res.send({url:'/error?errnum=500&errmsg=Server Error'});
+              res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }
           	logout.logout(req,res);
         });

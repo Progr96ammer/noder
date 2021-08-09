@@ -33,7 +33,7 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 		var session = 'sessions.'+hashRand;
 		User.updateOne({_id:user._id},{$set:{[session]:{date:new Date()}}}, function(err){
 			if (err) {
-				res.send({url:'/error?errnum=500&errmsg=Server Error'});
+				res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
 			}
 		});
 	}
@@ -47,7 +47,7 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 exports.routeAuth = [(req, res, next)=> {
 	if (!getHttpToken(req,res).reftoken) {
 		if (reqType(req)=='api'){
-			res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+			res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
 		}
 		res.render('./auth/login')
 	}
@@ -56,7 +56,7 @@ exports.routeAuth = [(req, res, next)=> {
 			jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY, function(err, decoded) {
 				if (err) {
 					if (reqType(req)=='api'){
-						res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+						res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
 					}
 					res.render('./auth/login')
 				}
@@ -68,14 +68,14 @@ exports.routeAuth = [(req, res, next)=> {
 }];
 
 const Auth = exports.Auth = (req,res) =>{
-		var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY)
-			if (decoded) {
-				return {Auth:true,user:decoded.user,session:decoded.session};
-			}
-			if (reqType(req)=='api'){
-				res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
-			}
-		res.render('./auth/login')
+	var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY)
+		if (decoded) {
+			return {Auth:true,user:decoded.user,session:decoded.session};
+		}
+		if (reqType(req)=='api'){
+			res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+		}
+	res.render('./auth/login')
 }
 
 exports.checkAuth = (req,res) =>{
@@ -96,7 +96,7 @@ exports.checkEmailVerify = [(req, res, next)=> {
 			User.findById(decoded.user._id, function(err, user){
 				if (err) {
 					if (reqType(req)=='api'){
-						res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+						res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
 					}
 					res.render('./auth/login')
 				}
@@ -108,7 +108,7 @@ exports.checkEmailVerify = [(req, res, next)=> {
 				}
 				if(!user.sessions[decoded.session]){
 					if (reqType(req)=='api'){
-						res.send({url:'/error?errnum=401&errmsg=Unauthorized'});
+						res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
 					}
 					res.render('./auth/login')
 				}
@@ -116,8 +116,12 @@ exports.checkEmailVerify = [(req, res, next)=> {
 			});
 		}
 	}
-	else
-		return false;
+	else{
+		if (reqType(req)=='api'){
+			res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+		}
+		res.render('./auth/login')
+	}
 }];
 
 const rateLimiter = exports.rateLimiter = (req, res, next) =>{
@@ -129,6 +133,6 @@ const rateLimiter = exports.rateLimiter = (req, res, next) =>{
 		next();
 	}
 	else{
-		res.send ({"errors": [{"value": "","msg": "You have reached the maximum number of attampting for one hour. please try again after one Hour.","param": "attempts","location": "body"}]});
+		res.send ({"errors": [{"value": "","msg": "You have reached the maximum number of failed attampting for one hour. please try again after one Hour.","param": "attempts","location": "body"}]});
 	}
 }

@@ -19,7 +19,7 @@ check('credential')
     return new Promise((resolve, reject) => {
       User.findOne({$or:[{email: value},{username: value}]}, function(err, user){
         if(err) {
-          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
         if(!user) {
           reject(new Error('This E-Mail/Username Is Not Registred!'))
@@ -37,10 +37,7 @@ check('password')
       if (req.body.credential) {
         User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
           if(err) {
-            reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
-          }
-          else if (!user) {
-            reject(new Error('Incorrect Password'))
+            reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
           }
           else if(crypto.createHash('md5').update(value).digest("hex")!== user.password) {
             reject(new Error('Incorrect Password!'))
@@ -60,8 +57,8 @@ check('password')
     }
     else{
       User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
-        if (err) {
-          res.send({url:'/error?errnum=500&errmsg=Server Error'});
+        if (err || !user) {
+          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
         res.send({url:'/home',token:Auth.attempt(user,res)})
       }).select("-password").select("-verification.email.token").select("-verification.password.token");

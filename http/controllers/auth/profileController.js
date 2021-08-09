@@ -22,13 +22,13 @@ check('username')
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
       User.findById(Auth.Auth(req).user._id, function(err, user){
-        if(err) {
-          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+        if(err || !user) {
+          reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
     	else if(user.username != value) {
     		User.findOne({username:value}, function(err, result){
     			if(err) {
-		          	reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
+		          	reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
 		        }
     			if (result) {
     				reject(new Error('Username already in use'));
@@ -51,11 +51,8 @@ check('password')
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
         User.findById(Auth.Auth(req).user._id, function(err, user){
-          if(err) {
-            reject(new Error('Soory We Cann`t Complete Your Procedure Right Now!'))
-          }
-          else if (!user) {
-            reject(new Error('Incorrect Password'))
+          if(err || !user) {
+            reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
           }
           else if(crypto.createHash('md5').update(value).digest("hex")!== user.password) {
             reject(new Error('Incorrect Password!'))
@@ -72,8 +69,8 @@ check('password')
     }
     else{
       User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username}, {new: true}, function(err, user){
-      	if (err) {
-            res.send({url:'/error?errnum=500&errmsg=Server Error'});
+      	if (err || !user) {
+            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
       	}
           res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
       }).select("-password").select("-verification.email.token").select("-verification.password.token");
