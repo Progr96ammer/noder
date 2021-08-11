@@ -38,7 +38,7 @@ check('password')
     else{
       User.deleteOne({ _id:Auth.Auth(req).user._id}, function(err, user){
           if(err) {
-              res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+              res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
           }
           	logout.logout(req,res);
         });

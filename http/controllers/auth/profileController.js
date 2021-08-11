@@ -70,7 +70,7 @@ check('password')
     else{
       User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username}, {new: true}, function(err, user){
       	if (err || !user) {
-            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+            res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
       	}
           res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
       }).select("-password").select("-verification.email.token").select("-verification.password.token");

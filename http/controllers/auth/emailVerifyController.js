@@ -23,7 +23,7 @@ const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
   var rand = Math.floor(Math.random()*899999+100000);
   User.findOneAndUpdate({_id:id},{$set:{'verification.email':{token: rand, date: Date()}}},{new:true}, function(err, user) {
     if (err || !user) {
-      res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+      res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
     }
     // async..await is not allowed in global scope, must use a wrapper
     async function main() {
@@ -83,11 +83,11 @@ exports.verifyEmail = [
     else{
       User.findById(Auth.Auth(req).user._id, function(err,user){
         if (err || !user) {
-          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+          res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
         }
         User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{$set:{'verification.email':{token: 'verified', date: Date()}}},{new:true}, function(err,user) {
           if (err || !user) {
-            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+            res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
           }
           res.send({url:'/home',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
         }).select("-password").select("-verification.email.token").select("-verification.password.token");

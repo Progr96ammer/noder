@@ -75,11 +75,11 @@ return true;
         });
       newUser.save(function (err , saveRes) {
         if (err) {
-          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+          res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
         }
         User.findById(newUser._id, function(err, user){
           if (err || !user) {
-            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+            res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
           }
           emailVerifyController.sendEmailVerify(req,res,user._id,function (){
             res.send({url:'emailVerifyForm',token:Auth.attempt(user,res)})

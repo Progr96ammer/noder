@@ -5,7 +5,7 @@ $( document ).ready(function() {
             url:$(this).closest('form').attr("action"),
             data:$(this).closest('form').serialize(),
             success:function(response){
-                if (response == 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'){
+                if (response.url == 'reload'){
                     alert('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
                     window.location.reload();
                 }
@@ -30,7 +30,7 @@ $( document ).ready(function() {
             },
             error:function(errors){
                 alert('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
-                window.location.replace("/user/login");
+                window.location.replace("/home");
             },
         });
     });

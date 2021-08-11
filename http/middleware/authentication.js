@@ -33,7 +33,7 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 		var session = 'sessions.'+hashRand;
 		User.updateOne({_id:user._id},{$set:{[session]:{date:new Date()}}}, function(err){
 			if (err) {
-				res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+				res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
 			}
 		});
 	}
@@ -45,20 +45,17 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 };
 
 exports.routeAuth = [(req, res, next)=> {
-	if (!getHttpToken(req,res).reftoken) {
-		if (reqType(req)=='api'){
-			res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
-		}
-		res.render('./auth/login')
-	}
 	jwt.verify(getHttpToken(req,res).token,process.env.SECRET_KEY, function(err, decoded) {
 		if (err) {
 			jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY, function(err, decoded) {
 				if (err) {
 					if (reqType(req)=='api'){
-						res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+						res.send({
+							url: '/home',
+							msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
+						});
 					}
-					res.render('./auth/login')
+					res.redirect('/home')
 				}
 				attempt(decoded.user,res,false,decoded.session);
 			})
@@ -73,9 +70,12 @@ const Auth = exports.Auth = (req,res) =>{
 			return {Auth:true,user:decoded.user,session:decoded.session};
 		}
 		if (reqType(req)=='api'){
-			res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+			res.send({
+				url: '/home',
+				msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
+			});
 		}
-	res.render('./auth/login')
+	res.redirect('/home')
 }
 
 exports.checkAuth = (req,res) =>{
@@ -90,37 +90,35 @@ exports.checkAuth = (req,res) =>{
 
 
 exports.checkEmailVerify = [(req, res, next)=> {
-	if (getHttpToken(req,res).reftoken) {
-		var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY);
-		if (decoded) {
-			User.findById(decoded.user._id, function(err, user){
-				if (err) {
-					if (reqType(req)=='api'){
-						res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
-					}
-					res.render('./auth/login')
+	var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY);
+	if (decoded) {
+		User.findById(decoded.user._id, function(err, user){
+			if (err) {
+				if (reqType(req)=='api'){
+					res.send({
+						url: 'reload',
+						msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
+					});
 				}
-				if (user.verification.email.token != 'verified') {
-					if (reqType(req)=='api'){
-						res.send({url:'user/emailVerifyForm'});
-					}
-					res.redirect('user/emailVerifyForm');
+				res.redirect('/home')
+			}
+			if (user.verification.email.token != 'verified') {
+				if (reqType(req)=='api'){
+					res.send({url:'user/emailVerifyForm',msg:'please verify that this account is yours!'});
 				}
-				if(!user.sessions[decoded.session]){
-					if (reqType(req)=='api'){
-						res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
-					}
-					res.render('./auth/login')
+				res.redirect('user/emailVerifyForm');
+			}
+			if(!user.sessions[decoded.session]){
+				if (reqType(req)=='api'){
+					res.send({
+						url: '/home',
+						msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
+					});
 				}
-				next();
-			});
-		}
-	}
-	else{
-		if (reqType(req)=='api'){
-			res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
-		}
-		res.render('./auth/login')
+				res.redirect('/home')
+			}
+			next();
+		});
 	}
 }];
 
