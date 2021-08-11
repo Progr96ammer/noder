@@ -47,7 +47,7 @@ check('credential')
       var rand = Math.floor(Math.random()*899999+100000);
       User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{$set:{'verification.password':{token: rand, date: Date()}}}, function(err, user){
         if (err || !user) {
-          res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
+          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
         // async..await is not allowed in global scope, must use a wrapper
         async function main() {
@@ -112,7 +112,7 @@ exports.confirmResetPassword = [
     else{
         User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err,user) {
           if (err) {
-            res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
+            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }
           res.send({url:'resetpassword/email?credential='+req.body.credential+''})
         });
@@ -148,12 +148,12 @@ return true;
     }
     else{
       if (!req.body.credential) {
-        res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
+        res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
       }
       else{
         User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex"),$unset:{'verification.password':''}},{new:true}, function(err,user){
           if (err || !user) {
-            res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
+            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }
           res.send({url:'/home',token:Auth.attempt(user,res)})
         }).select("-password").select("-verification.email.token").select("-verification.password.token");
@@ -205,7 +205,7 @@ exports.updatePassword = [
     }
       User.updateOne({_id:Auth.Auth(req).user._id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")}, function(err){
         if (err) {
-          res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
+          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
       });
     res.send({url:'profile'})

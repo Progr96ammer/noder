@@ -6,9 +6,12 @@
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/deleteUserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/deleteUserController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/emailVerifyController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/loginController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/loginController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/logoutController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/logoutController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/passwordController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/profileController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/profileController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/auth/registerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/registerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/middleware/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/middleware/authentication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +100,7 @@
       <workItem from="1628551255753" duration="1224000" />
       <workItem from="1628625819261" duration="517000" />
       <workItem from="1628633722817" duration="12000" />
-      <workItem from="1628691804289" duration="5565000" />
+      <workItem from="1628691804289" duration="11165000" />
     </task>
     <servers />
   </component>

@@ -33,7 +33,7 @@ const attempt = exports.attempt = (user, res,firstAttampt=true,hashRand='')=> {
 		var session = 'sessions.'+hashRand;
 		User.updateOne({_id:user._id},{$set:{[session]:{date:new Date()}}}, function(err){
 			if (err) {
-				res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
+				res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
 			}
 		});
 	}

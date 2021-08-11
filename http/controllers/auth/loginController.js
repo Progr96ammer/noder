@@ -59,7 +59,7 @@ check('password')
     else{
       User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
         if (err || !user) {
-          res.send({url:'reload',msg:'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'});
+          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
         res.send({url:'/home',token:Auth.attempt(user,res)})
       }).select("-password").select("-verification.email.token").select("-verification.password.token");

@@ -5,7 +5,7 @@ $( document ).ready(function() {
             url:$(this).closest('form').attr("action"),
             data:$(this).closest('form').serialize(),
             success:function(response){
-                if (response.url == 'reload'){
+                if (response == 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'){
                     alert('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
                     window.location.reload();
                 }
