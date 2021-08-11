@@ -30,6 +30,7 @@ check('credential')
   }),
 
 check('password')
+.notEmpty().withMessage('Password Required!')
 .isLength({ min: 8 }).withMessage('Password Must Be At Least 8 Charecter')
 .bail()
 .custom((value, {req}) => {

@@ -57,7 +57,7 @@ const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
 
 exports.verifyEmail = [
   check('verificationCode')
-      .notEmpty().withMessage('Verifycation code required!')
+      .notEmpty().withMessage('Verification Code Required!')
       .bail()
       .custom((value, {req}) => {
         return new Promise((resolve, reject) => {
