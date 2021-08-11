@@ -94,7 +94,7 @@ exports.checkEmailVerify = [(req, res, next)=> {
 	if (decoded) {
 		User.findById(decoded.user._id, function(err, user){
 			if (err) {
-				if (reqType(req)=='api'){
+				if (reqType(req,res)=='api'){
 					res.send({
 						url: 'reload',
 						msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
@@ -106,7 +106,9 @@ exports.checkEmailVerify = [(req, res, next)=> {
 				if (reqType(req)=='api'){
 					res.send({url:'user/emailVerifyForm',msg:'please verify that this account is yours!'});
 				}
-				res.redirect('user/emailVerifyForm');
+				else{
+					res.redirect('user/emailVerifyForm');
+				}
 			}
 			if(!user.sessions[decoded.session]){
 				if (reqType(req)=='api'){
