@@ -10,7 +10,7 @@ const getHttpToken = exports.getHttpToken=(req,res)=>{
 		return httpToken
 	}
 	else if(req.headers['x-access-token']){
-		var httpToken = JSON.parse(req.headers['x-access-token']).token;
+		var httpToken = JSON.parse(req.headers['x-access-token']);
 		return httpToken
 	}
 	else{

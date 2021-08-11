@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 //Set up default mongoose connection
 var mongoDB = process.env.DB_URL;
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true},function () {
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false},function () {
 });
 //Get the default connection
 var db = mongoose.connection;
