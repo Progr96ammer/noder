@@ -25,6 +25,7 @@ exports.confirmResetPasswordForm = function(req, res) {
 exports.sendResetPassword = [
 check('credential')
 .notEmpty().withMessage('E-Mail/Username Required!')
+.bail()
 .custom((value, {req}) => {
   return new Promise((resolve, reject) => {
     User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
@@ -131,10 +132,12 @@ exports.resetPasswordForm = function(req, res) {
 exports.resetPassword = [
 check('newPassword')
 .notEmpty().withMessage('New Password required!')
+.bail()
 .isLength({ min: 8 }).withMessage('Password Must Be At Least 8 Charecter'),
 
 check('confirmPassword')
 .notEmpty().withMessage('Confirm Password required!')
+.bail()
 .custom((value, { req }) => {
 if (value !== req.body.newPassword) {
   throw new Error('Password Didn`t Match!');
@@ -171,6 +174,7 @@ exports.updatePasswordForm = function(req, res) {
 exports.updatePassword = [
   check('currentPassword')
       .notEmpty().withMessage('Current Password required!')
+      .bail()
       .isLength({ min: 8 }).withMessage('Password Must Be At Least 8 Charecter')
       .bail()
       .custom((value, {req}) => {
@@ -188,10 +192,12 @@ exports.updatePassword = [
       }),
   check('newPassword')
       .notEmpty().withMessage('New Password required!')
+      .bail()
       .isLength({ min: 8 }).withMessage('Password Must Be At Least 8 Charecter'),
 
   check('confirmPassword')
       .notEmpty().withMessage('Confirm Password required!')
+      .bail()
       .custom((value, { req }) => {
         if (value !== req.body.newPassword) {
           throw new Error('Password Didn`t Match!');

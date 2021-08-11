@@ -13,11 +13,13 @@ exports.profileForm = function(req, res, next) {
 exports.profile = [
 check('name')
 .notEmpty().withMessage('Name required!')
+.bail()
 .isLength({ min: 3 }).withMessage('Name Must Be At Least 3 Charecter')
 .isLength({ max: 15 }).withMessage('Name Must Be At Most 15 Charecter'),
 
 check('username')
 .notEmpty().withMessage('Username required!')
+.bail()
 .isLength({ max: 15 }).withMessage('Username Must Be At Most 15 Charecter')
 .isLength({ min: 5 }).withMessage('Username Must Be At Least 5 Charecter')
 .bail()
@@ -49,6 +51,7 @@ check('username')
 
 check('password')
 .notEmpty().withMessage('Password required!')
+.bail()
 .isLength({ min: 8 }).withMessage('Password Must Be At Least 8 Charecter')
 .bail()
 .custom((value, {req}) => {

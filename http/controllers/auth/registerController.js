@@ -14,11 +14,13 @@ exports.registerForm = function(req, res, next) {
 exports.register = [
 check('name')
 .notEmpty().withMessage('Name Required!')
+.bail()
 .isLength({ min: 3 }).withMessage('Name Must Be At Least 3 Charecter')
 .isLength({ max: 15 }).withMessage('Name Must Be At Most 15 Charecter'),
 
 check('email')
 .notEmpty().withMessage('E-Mail Required!')
+.bail()
 .isEmail().withMessage('Email Must Be As Type Of Email')
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
@@ -36,6 +38,7 @@ check('email')
 
 check('username')
 .notEmpty().withMessage('Username Required!')
+.bail()
 .isLength({ max: 15 }).withMessage('Username Must Be At Most 15 Charecter')
 .isLength({ min: 5 }).withMessage('Username Must Be At Least 5 Charecter')
 .custom((value, {req}) => {
@@ -54,10 +57,12 @@ check('username')
 
 check('password')
 .notEmpty().withMessage('Password Required!')
+.bail()
 .isLength({ min: 8 }).withMessage('Password Must Be At Least 8 Charecter'),
 
 check('confirmPassword')
 .notEmpty().withMessage('Confirm Password Required!')
+.bail()
 .isLength({ min: 8 }).withMessage('Confirm Password Must Be At Least 8 Charecter')
 .custom((value, { req }) => {
 if (value !== req.body.password) {
