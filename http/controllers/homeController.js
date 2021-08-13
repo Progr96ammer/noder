@@ -2,6 +2,11 @@ var User = require('../../models/userModel');
 var Auth = require('../middleware/authentication');
 
 exports.home = function(req, res, next) {
+  if (Auth.reqType(req)=='api'){
+    res.send({
+      url: '/home',
+    });
+  }
   res.render('home',{
     auth:true,
     user:Auth.Auth(req,res).user,

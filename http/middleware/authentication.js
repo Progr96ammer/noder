@@ -55,7 +55,9 @@ exports.routeAuth = [(req, res, next)=> {
 							msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
 						});
 					}
-					res.redirect('/home')
+					else{
+						res.redirect('user/login')
+					}
 				}
 				attempt(decoded.user,res,false,decoded.session);
 			})
