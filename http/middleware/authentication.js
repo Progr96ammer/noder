@@ -91,7 +91,7 @@ exports.checkAuth = (req,res) =>{
 }
 
 
-exports.checkEmailVerify = [(req, res, next)=> {
+exports.SyncDatabase = [(req, res, next)=> {
 	var decoded = jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY);
 	if (decoded) {
 		User.findById(decoded.user._id, function(err, user){
