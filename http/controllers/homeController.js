@@ -7,10 +7,12 @@ exports.home = function(req, res, next) {
       url: '/home',
     });
   }
-  res.render('home',{
-    auth:true,
-    user:Auth.Auth(req,res).user,
-  });
+  else {
+    res.render('home',{
+      auth:true,
+      user:Auth.Auth(req,res).user,
+    });
+  }
 };
 
 exports.index = function (req,res,next){
