@@ -18,7 +18,7 @@ const getHttpToken = exports.getHttpToken=(req,res)=>{
 	}
 }
 
-const reqType = exports.reqType=(req,res)=>{
+const reqType = exports.reqType=(req)=>{
 	if(Object.keys(req.cookies).length != 0){
 		return 'browser'
 	}
@@ -98,7 +98,7 @@ exports.SyncDatabase = [(req, res, next)=> {
 	if (decoded) {
 		User.findById(decoded.user._id, function(err, user){
 			if (err) {
-				if (reqType(req,res)=='api'){
+				if (reqType(req)=='api'){
 					res.send({
 						url: 'reload',
 						msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
