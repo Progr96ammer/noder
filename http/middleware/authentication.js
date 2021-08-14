@@ -20,10 +20,10 @@ const getHttpToken = exports.getHttpToken=(req,res)=>{
 
 const reqType = exports.reqType=(req)=>{
 	if(req.headers['x-access-token']){
-		return 'browser'
+		return 'api'
 	}
 	else if(Object.keys(req.cookies).length != 0){
-		return 'api'
+		return 'browser'
 	}
 }
 
