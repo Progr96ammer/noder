@@ -3,9 +3,7 @@ var Auth = require('../middleware/authentication');
 
 exports.home = function(req, res, next) {
   if (Auth.reqType(req)=='api'){
-    res.send({
-      url: '/home',
-    });
+    res.send({url: '/home'});
   }
   else {
     res.render('home',{

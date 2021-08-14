@@ -49,7 +49,7 @@ exports.routeAuth = [(req, res, next)=> {
 		if (err) {
 			jwt.verify(getHttpToken(req,res).reftoken, process.env.SECRET_KEY, function(err, decoded) {
 				if (err) {
-					if (reqType(req,res)=='api'){
+					if (reqType(req)=='api'){
 						res.send({
 							url: '/home',
 							msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
