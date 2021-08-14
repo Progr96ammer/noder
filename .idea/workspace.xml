@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/homeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/homeController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/middleware/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/middleware/authentication.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +98,7 @@
       <workItem from="1628863696525" duration="5390000" />
       <workItem from="1628903523015" duration="168000" />
       <workItem from="1628926875158" duration="3637000" />
-      <workItem from="1628932946172" duration="247000" />
+      <workItem from="1628932946172" duration="469000" />
     </task>
     <servers />
   </component>
