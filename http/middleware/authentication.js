@@ -77,7 +77,9 @@ const Auth = exports.Auth = (req,res) =>{
 				msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
 			});
 		}
-	res.redirect('/home')
+		else{
+			res.redirect('/home')
+		}
 }
 
 exports.checkAuth = (req,res) =>{
@@ -102,7 +104,9 @@ exports.SyncDatabase = [(req, res, next)=> {
 						msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
 					});
 				}
-				res.redirect('/home')
+				else{
+					res.redirect('/home')
+				}
 			}
 			if (user.verification.email.token != 'verified') {
 				if (reqType(req)=='api'){
@@ -119,7 +123,9 @@ exports.SyncDatabase = [(req, res, next)=> {
 						msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
 					});
 				}
-				res.redirect('/home')
+				else{
+					res.redirect('/home')
+				}
 			}
 			next();
 		});
