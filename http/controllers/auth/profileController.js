@@ -4,10 +4,17 @@ var Auth = require('../../middleware/authentication');
 var User = require('../../../models/userModel');
 
 exports.profileForm = function(req, res, next) {
-    res.render('auth/profile',{
-        auth:true,
-        user:Auth.Auth(req,res).user,
-    });
+    if (Auth.reqType(req)=='api'){
+        res.send({
+            user:Auth.Auth(req,res).user,
+        });
+    }
+    else{
+        res.render('auth/profile',{
+            auth:true,
+            user:Auth.Auth(req,res).user,
+        });
+    }
 };
 
 exports.profile = [
