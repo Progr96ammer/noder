@@ -21,7 +21,7 @@ router.post('/sendResetPassword', Auth.rateLimiter, passwordController.sendReset
 router.get('/confirmResetPasswordForm', Auth.rateLimiter, passwordController.confirmResetPasswordForm);
 router.post('/confirmResetPassword', Auth.rateLimiter, passwordController.confirmResetPassword);
 
-router.get('z', passwordController.resetPasswordForm);
+router.get('/resetPassword/email', passwordController.resetPasswordForm);
 router.post('/resetPassword', Auth.rateLimiter, passwordController.resetPassword);
 
 router.post('/sendEmailVerify',Auth.routeAuth, Auth.rateLimiter, emailVerifyController.sendEmailVerifyAgain);
