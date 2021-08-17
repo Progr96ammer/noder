@@ -119,12 +119,14 @@ exports.SyncDatabase = [(req, res, next)=> {
 			if(!user.sessions[decoded.session]){
 				if (reqType(req)=='api'){
 					res.send({
-						url: '/home',
+						url: '/sessionNotFound',
 						msg: 'Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'
 					});
 				}
 				else{
-					res.redirect('/home')
+					res.clearCookie('token');
+					res.clearCookie('reftoken');
+					res.redirect('user/login')
 				}
 			}
 			next();
