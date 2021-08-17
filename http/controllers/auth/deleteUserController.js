@@ -42,7 +42,9 @@ check('password')
           if(err) {
               res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }
-          	logout.logout(req,res);
+          res.clearCookie('token');
+          res.clearCookie('reftoken');
+          res.send({url:'../'})
         });
     }
   },
