@@ -41,6 +41,9 @@ check('password')
           if(err) {
             reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
           }
+          if(!user) {
+            reject(new Error('Incorrect Password!'))
+          }
           else if(crypto.createHash('md5').update(value).digest("hex")!== user.password) {
             reject(new Error('Incorrect Password!'))
           }
