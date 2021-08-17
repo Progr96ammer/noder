@@ -209,10 +209,12 @@ exports.updatePassword = [
     if (!errors.isEmpty()){
       res.send({errors: errors.array()});
     }
-      User.updateOne({_id:Auth.Auth(req).user._id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")}, function(err){
-        if (err) {
-          res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
-        }
-      });
-    res.send({url:'profile'})
+      else {
+        User.updateOne({_id:Auth.Auth(req).user._id},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex")}, function(err){
+          if (err) {
+            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+          }
+        });
+        res.send({url:'profile'})
+    }
   }]
