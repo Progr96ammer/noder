@@ -126,7 +126,7 @@ exports.SyncDatabase = [(req, res, next)=> {
 				else{
 					res.clearCookie('token');
 					res.clearCookie('reftoken');
-					res.redirect('user/login')
+					res.redirect('/user/login')
 				}
 			}
 			next();
