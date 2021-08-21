@@ -21,7 +21,7 @@ const sendEmailVerifyAgain = exports.sendEmailVerifyAgain = (req, res)=> {
 
 const sendEmailVerify = exports.sendEmailVerify = (req,res,id,cb)=> {
   var rand = Math.floor(Math.random()*899999+100000);
-  User.findOneAndUpdate({_id:id},{$set:{'verification.email':{token: rand, date: Date()}}},{new:true}, function(err, user) {
+  User.findOneAndUpdate({_id:id},{$set:{'verification.email':{token: rand, date: Date(),status:'Not Verified'}}},{new:true}, function(err, user) {
     if (err || !user) {
       res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
     }
@@ -85,7 +85,7 @@ exports.verifyEmail = [
         if (err || !user) {
           res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
-        User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{$set:{'verification.email':{token: 'verified', date: Date()}}},{new:true}, function(err,user) {
+        User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{$set:{'verification.email':{token: 'verified', date: Date(),status:'Verified'}}},{new:true}, function(err,user) {
           if (err || !user) {
             res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }

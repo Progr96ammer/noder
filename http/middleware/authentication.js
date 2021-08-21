@@ -108,7 +108,7 @@ exports.SyncDatabase = [(req, res, next)=> {
 					res.redirect('/home')
 				}
 			}
-			if (user.verification.email.token != 'verified') {
+			if (user.verification.email.status != 'Verified') {
 				if (reqType(req)=='api'){
 					res.send({url:'user/emailVerifyForm',msg:'please verify that this account is yours!'});
 				}

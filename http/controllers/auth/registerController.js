@@ -81,7 +81,6 @@ return true;
          email:req.body.email,
          username:req.body.username,
          password:crypto.createHash('md5').update(req.body.password).digest("hex"),
-         verifiedAt:"",
         });
       newUser.save(function (err , saveRes) {
         if (err) {

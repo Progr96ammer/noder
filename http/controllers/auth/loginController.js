@@ -65,6 +65,9 @@ check('password')
         if (err || !user) {
           res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
+        if (user.verification.email.status !='Verified'){
+          res.send({url:'/user/emailVerifyForm',token:Auth.attempt(user,res)})
+        }
         res.send({url:'/home',token:Auth.attempt(user,res)})
       }).select("-password").select("-verification.email.token").select("-verification.password.token");
     }
