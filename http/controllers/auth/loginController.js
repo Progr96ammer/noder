@@ -68,7 +68,9 @@ check('password')
         if (user.verification.email.status !='Verified'){
           res.send({url:'/user/emailVerifyForm',token:Auth.attempt(user,res)})
         }
-        res.send({url:'/home',token:Auth.attempt(user,res)})
+        else{
+          res.send({url:'/home',token:Auth.attempt(user,res)})
+        }
       }).select("-password").select("-verification.email.token").select("-verification.password.token");
     }
   },
