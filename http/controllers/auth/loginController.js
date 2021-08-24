@@ -17,7 +17,7 @@ check('credential')
 .bail()
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
-      User.findOne({$or:[{email: value},{username: value}]}, function(err, user){
+      User.findOne({$or:[{email: value.toLowerCase()},{username: value.toLowerCase()}]}, function(err, user){
         if(err) {
           reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
@@ -37,7 +37,7 @@ check('password')
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
       if (req.body.credential) {
-        User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
+        User.findOne({$or:[{email: req.body.credential.toLowerCase()},{username: req.body.credential.toLowerCase()}]}, function(err, user){
           if(err) {
             reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
           }
@@ -61,7 +61,7 @@ check('password')
        res.send({errors: errors.array()});
     }
     else{
-      User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
+      User.findOne({$or:[{email: req.body.credential.toLowerCase()},{username: req.body.credential.toLowerCase()}]}, function(err, user){
         if (err || !user) {
           res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }

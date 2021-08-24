@@ -29,8 +29,8 @@ check('username')
         if(err || !user) {
           reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
-    	else if(user.username != value) {
-    		User.findOne({username:value}, function(err, result){
+    	else if(user.username != value.toLowerCase()) {
+    		User.findOne({username:value.toLowerCase()}, function(err, result){
     			if(err) {
 		          	reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
 		        }
@@ -74,7 +74,7 @@ check('password')
        res.send({errors: errors.array()});
     }
     else{
-      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username}, {new: true}, function(err, user){
+      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase()}, {new: true}, function(err, user){
       	if (err || !user) {
             res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
       	}

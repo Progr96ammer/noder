@@ -24,7 +24,7 @@ check('email')
 .isEmail().withMessage('Email Must Be As Type Of Email')
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
-      User.findOne({email:req.body.email}, function(err, user){
+      User.findOne({email:req.body.email.toLowerCase()}, function(err, user){
         if(err) {
           reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
@@ -43,7 +43,7 @@ check('username')
 .isLength({ min: 5 }).withMessage('Username Must Be At Least 5 Charecter')
 .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
-      User.findOne({username:req.body.username}, function(err, user){
+      User.findOne({username:req.body.username.toLowerCase()}, function(err, user){
         if(err) {
           reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
         }
@@ -78,8 +78,8 @@ return true;
     else{
       const newUser = new User({
         name:req.body.name,
-         email:req.body.email,
-         username:req.body.username,
+         email:req.body.email.toLowerCase(),
+         username:req.body.username.toLowerCase(),
          password:crypto.createHash('md5').update(req.body.password).digest("hex"),
         });
       newUser.save(function (err , saveRes) {

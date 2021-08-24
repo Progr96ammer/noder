@@ -17,7 +17,7 @@ exports.sendResetPasswordForm = function(req, res) {
 
 exports.confirmResetPasswordForm = function(req, res) {
   res.render('auth/confirmResetPasswordCode',{
-    credential:req.query.credential,
+    credential:req.query.credential.toLowerCase(),
     again:req.query.again,
   })
 };
@@ -28,7 +28,7 @@ check('credential')
 .bail()
 .custom((value, {req}) => {
   return new Promise((resolve, reject) => {
-    User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
+    User.findOne({$or:[{email: req.body.credential.toLowerCase()},{username: req.body.credential.toLowerCase()}]}, function(err, user){
       if(err) {
         reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
       }
@@ -46,7 +46,7 @@ check('credential')
     }
     else{
       var rand = Math.floor(Math.random()*899999+100000);
-      User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{$set:{'verification.password':{token: rand, date: Date()}}}, function(err, user){
+      User.findOneAndUpdate({$or:[{email: req.body.credential.toLowerCase()},{username: req.body.credential.toLowerCase()}]},{$set:{'verification.password':{token: rand, date: Date()}}}, function(err, user){
         if (err || !user) {
           res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
         }
@@ -76,9 +76,9 @@ check('credential')
           });
           var again;
           if (req.body.again){
-            res.send({url:'confirmResetPasswordForm?credential='+req.body.credential+'&again='+req.body.again+''})
+            res.send({url:'confirmResetPasswordForm?credential='+req.body.credential.toLowerCase()+'&again='+req.body.again+''})
           }
-          res.send({url:'confirmResetPasswordForm?credential='+req.body.credential+''})
+          res.send({url:'confirmResetPasswordForm?credential='+req.body.credential.toLowerCase()+''})
         }
         main().catch(console.error);
       });
@@ -91,7 +91,7 @@ exports.confirmResetPassword = [
       .bail()
       .custom((value, {req}) => {
         return new Promise((resolve, reject) => {
-          User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err, user){
+          User.findOne({$or:[{email: req.body.credential.toLowerCase()},{username: req.body.credential.toLowerCase()}]}, function(err, user){
             if(err || !user) {
               reject(new Error('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!'))
             }
@@ -111,11 +111,11 @@ exports.confirmResetPassword = [
       res.send({errors: errors.array()});
     }
     else{
-        User.findOne({$or:[{email: req.body.credential},{username: req.body.credential}]}, function(err,user) {
+        User.findOne({$or:[{email: req.body.credential.toLowerCase()},{username: req.body.credential.toLowerCase()}]}, function(err,user) {
           if (err) {
             res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }
-          res.send({url:'resetpassword/email?credential='+req.body.credential+''})
+          res.send({url:'resetpassword/email?credential='+req.body.credential.toLowerCase()+''})
         });
     }
   }]
@@ -124,7 +124,7 @@ exports.confirmResetPassword = [
 
 exports.resetPasswordForm = function(req, res) {
   if (req.query.credential) {
-    res.render('./auth/reset',{credential:req.query.credential});
+    res.render('./auth/reset',{credential:req.query.credential.toLowerCase()});
   }
 };
 
@@ -154,7 +154,7 @@ return true;
         res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
       }
       else{
-        User.findOneAndUpdate({$or:[{email: req.body.credential},{username: req.body.credential}]},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex"),$unset:{'verification.password':''}},{new:true}, function(err,user){
+        User.findOneAndUpdate({$or:[{email: req.body.credential.toLowerCase()},{username: req.body.credential.toLowerCase()}]},{password:crypto.createHash('md5').update(req.body.newPassword).digest("hex"),$unset:{'verification.password':''}},{new:true}, function(err,user){
           if (err || !user) {
             res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
           }
