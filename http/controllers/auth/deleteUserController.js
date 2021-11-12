@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var logout = require('../../controllers/auth/logoutController');
 const { check, validationResult } = require('express-validator');
+const fs = require("fs");
 
 exports.deleteUserForm = function(req, res, next) {
     res.render('auth/deleteUser',{
@@ -38,6 +39,9 @@ check('password')
        res.send({errors: errors.array()});
     }
     else{
+        if (Auth.Auth(req).user.avatar != '' && fs.existsSync('public' + Auth.Auth(req).user.avatar)){
+            fs.unlinkSync('public' + Auth.Auth(req).user.avatar)
+        }
       User.deleteOne({ _id:Auth.Auth(req).user._id}, function(err, user){
           if(err) {
               res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');

@@ -8,6 +8,18 @@ var passwordController = require('../http/controllers/auth/passwordController');
 var emailVerifyController = require('../http/controllers/auth/emailVerifyController');
 var profileController = require('../http/controllers/auth/profileController');
 var deleteUserController = require('../http/controllers/auth/deleteUserController');
+var multer  = require('multer')
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images/avatars')
+    },
+    filename: function (req, file, cb) {
+        let extArray = file.mimetype.split("/");
+        let extension = extArray[extArray.length - 1];
+        cb(null, file.fieldname + '-' + Date.now()+ '.' +extension)
+    }
+})
+const upload = multer({ storage: storage })
 
 router.get('/register', registerController.registerForm);
 router.post('/register', Auth.rateLimiter, registerController.register);

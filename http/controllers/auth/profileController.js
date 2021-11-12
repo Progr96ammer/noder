@@ -2,6 +2,7 @@ var crypto = require('crypto');
 const { check, validationResult } = require('express-validator');
 var Auth = require('../../middleware/authentication');
 var User = require('../../../models/userModel');
+const fs = require('fs')
 
 exports.profileForm = function(req, res, next) {
     res.render('auth/profile',{
@@ -69,12 +70,29 @@ check('password')
   }),
 
 (req, res, next)=> {
+    if (req.files !== null){
+        const mimetype = ["jpeg", "png","jpg"];
+        var extArray = req.files.avatar.mimetype.split("/");
+        var extension = extArray[extArray.length - 1];
+        if(!mimetype.includes(extension)){
+            res.send({"errors": [{"value": "","msg": "Profile photo must be of type of JPEG, PNG or JPG.","param": "avatar","location": "body"}]});
+        }
+    }
   const errors = validationResult(req);
     if (!errors.isEmpty()){
        res.send({errors: errors.array()});
     }
     else{
-      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase()}, {new: true}, function(err, user){
+      var path = '';
+        if (req.files !== null) {
+            if (Auth.Auth(req).user.avatar != '' && fs.existsSync('public' + Auth.Auth(req).user.avatar)){
+                fs.unlinkSync('public' + Auth.Auth(req).user.avatar)
+            }
+            req.files.avatar.name = Auth.Auth(req).user._id + '.' + extension;
+            path = '/images/avatars/' + req.files.avatar.name;
+            req.files.avatar.mv(__dirname + '../../../../public/images/avatars/' + req.files.avatar.name)
+        }
+      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase(),avatar:path}, {new: true}, function(err, user){
       	if (err || !user) {
             res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
       	}
