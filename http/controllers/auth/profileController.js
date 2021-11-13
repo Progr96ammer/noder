@@ -85,6 +85,7 @@ check('password')
     else{
       var path = '';
         if (req.files !== null) {
+            console.log(req.files)
             if (Auth.Auth(req).user.avatar != '' && fs.existsSync('public' + Auth.Auth(req).user.avatar)){
                 fs.unlinkSync('public' + Auth.Auth(req).user.avatar)
             }
