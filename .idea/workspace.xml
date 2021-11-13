@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d4d888e-81a4-465e-85e7-bfb6b506ef7e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/avatars/6120db92fad5df1cc0dab749.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/auth/profileController.js" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/auth/profileController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/avatars/6120db92fad5df1cc0dab749.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/avatars/6120db92fad5df1cc0dab749.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +119,7 @@
       <workItem from="1629839892878" duration="1031000" />
       <workItem from="1630070101626" duration="724000" />
       <workItem from="1636747106243" duration="589000" />
-      <workItem from="1636810717474" duration="7275000" />
+      <workItem from="1636810717474" duration="8543000" />
     </task>
     <servers />
   </component>
