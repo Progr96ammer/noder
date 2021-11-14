@@ -83,22 +83,28 @@ check('password')
        res.send({errors: errors.array()});
     }
     else{
-        console.log(req)
-      var path = '';
         if (req.files !== null) {
             if (Auth.Auth(req).user.avatar != '' && fs.existsSync('public' + Auth.Auth(req).user.avatar)){
                 fs.unlinkSync('public' + Auth.Auth(req).user.avatar)
             }
             req.files.avatar.name = Auth.Auth(req).user._id + '.' + extension;
-            path = '/images/avatars/' + req.files.avatar.name;
+            var path = '/images/avatars/' + req.files.avatar.name;
             req.files.avatar.mv('./public/images/avatars/' + req.files.avatar.name)
+            User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase(),avatar:path}, {new: true}, function(err, user){
+                if (err || !user) {
+                    res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+                }
+                res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
+            }).select("-password").select("-verification.email.token").select("-verification.password.token");
         }
-      User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase(),avatar:path}, {new: true}, function(err, user){
-      	if (err || !user) {
-            res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
-      	}
-          res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
-      }).select("-password").select("-verification.email.token").select("-verification.password.token");
+        else {
+            User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase()}, {new: true}, function(err, user){
+                if (err || !user) {
+                    res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
+                }
+                res.send({url:'profile',token:Auth.attempt(user,res,false,Auth.Auth(req).session)})
+            }).select("-password").select("-verification.email.token").select("-verification.password.token");
+        }
     }
   },
 ];
