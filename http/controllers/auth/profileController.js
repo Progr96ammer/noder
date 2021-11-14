@@ -87,7 +87,7 @@ check('password')
             if (Auth.Auth(req).user.avatar != '' && fs.existsSync('public' + Auth.Auth(req).user.avatar)){
                 fs.unlinkSync('public' + Auth.Auth(req).user.avatar)
             }
-            req.files.avatar.name = Auth.Auth(req).user._id + '.' + extension;
+            req.files.avatar.name = Auth.Auth(req).user._id + '.' + 'png';
             var path = '/images/avatars/' + req.files.avatar.name;
             req.files.avatar.mv('./public/images/avatars/' + req.files.avatar.name)
             User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase(),avatar:path}, {new: true}, function(err, user){
