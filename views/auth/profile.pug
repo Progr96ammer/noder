@@ -7,7 +7,7 @@ block content
             .card-header Profile
             .card-body
               form(method='POST' action='/user/profile' enctype='multipart/form-data')
-                .form-group.col-6.m-auto
+                .form-group.col-12.m-auto
                   label.d-block.offers-view.text-center.m-auto.rounded-circle(for='avatar-input' style="width:15rem;height:15rem")
                     if user.avatar
                       img#avatarImage.h-100.d-block.img-thumbnail.w-100.rounded-circle(src=`${user.avatar}` alt='avatar')
