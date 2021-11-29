@@ -10,7 +10,7 @@ block content
                 .form-group.col-12.m-auto
                   label.d-block.offers-view.text-center.m-auto.rounded-circle(for='avatar-input' style="width:15rem;height:15rem")
                     if user.avatar
-                      img#avatarImage.h-100.d-block.img-thumbnail.w-100.rounded-circle(src=`${user.avatar}` alt='avatar')
+                      img#avatarImage.h-100.d-block.img-thumbnail.w-100.rounded-circle(src=`${user.avatar}` onerror="this.onerror=null;this.src='/images/avatars/default_avatar.png';" alt='avatar')
                     else
                       img#avatarImage.h-100.d-block.img-thumbnail.w-100.rounded-circle(src='/images/avatars/default_avatar.png' alt='avatar')
                   .col-sm-0.text-center
