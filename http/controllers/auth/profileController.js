@@ -89,7 +89,7 @@ check('password')
             }
             req.files.avatar.name = Auth.Auth(req).user._id + '.' + 'png';
             var path = '/images/avatars/' + req.files.avatar.name;
-            req.files.avatar.mv('./public/images/avatars/' + req.files.avatar.name)
+            req.files.avatar.mv('images/avatars/' + req.files.avatar.name)
             User.findOneAndUpdate({_id:Auth.Auth(req).user._id},{name:req.body.name,username:req.body.username.toLowerCase(),avatar:path}, {new: true}, function(err, user){
                 if (err || !user) {
                     res.send('Soory We Cann`t Complete Your Procedure Right Now, Please try again later!');
